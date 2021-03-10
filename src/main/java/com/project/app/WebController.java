@@ -1,6 +1,5 @@
 package com.project.app;
-import com.project.app.Questionnaire;
-import com.project.app.QuestionnaireRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,22 +8,22 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class WebController {
 
-    QuestionnaireRepo QRepository;
+    @Autowired
+    QuestionnaireRepo QRepo;
 
-    @GetMapping("/index")
+    @GetMapping("/questionnaire")
     public String questionnaire(Model model){
         model.addAttribute("Questionnaire",new Questionnaire());
-        return "index";
+        return "questionnaire";
     }
 
     @ResponseBody
-    @PostMapping(value = "/index")
+    @PostMapping(value = "/questionnaire")
     public Questionnaire questionnaireForm(@ModelAttribute Questionnaire ques, Model model){
-        Questionnaire q = new Questionnaire();
-        q = ques;
+        Questionnaire q = ques;
         System.out.println(q.getEmail() + q.getName());
         model.addAttribute(q);
-        //QRepository.save(q);
+        QRepo.save(q);
         return q;
     }
 

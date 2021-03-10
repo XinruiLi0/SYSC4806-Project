@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Address Book (SPA Version)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <h1>This is index</h1>
+    <p>Hello World</p>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+        });
+
+        function _refresh() {
+            $.ajax({
+                url: "/AddressBook/show",
+                type: 'GET',
+                success: function(buddies){
+                    console.log(buddies);
+                    var tableBody = document.getElementById("tableBody");
+                    while (tableBody.children[0] != null) {
+                        tableBody.removeChild(tableBody.children[0]);
+                    }
+                    buddies.buddyInfo.forEach(e => {
+                        var row = document.createElement('tr');
+                        var idCell = document.createElement('td');
+                        idCell.innerHTML = e.id;
+                        row.appendChild(idCell);
+                        var nameCell = document.createElement('td');
+                        nameCell.innerHTML = e.name;
+                        row.appendChild(nameCell);
+                        var phoneCell = document.createElement('td');
+                        phoneCell.innerHTML = e.phoneNumber;
+                        row.appendChild(phoneCell);
+                        var ageCell = document.createElement('td');
+                        ageCell.innerHTML = e.age;
+                        row.appendChild(ageCell);
+                        tableBody.appendChild(row);
+                    });
+                },
+                error: function(res){
+                    alert(res);
+                }
+            });
+        }
+
+        function _create() {
+            var name = document.getElementById("addName").value;
+            var phoneNumber = document.getElementById("addPhoneNumber").value;
+            var age = document.getElementById("addAge").value;
+            $.ajax({
+                url: "/AddressBook/create?name=" + name + "&phoneNumber=" + phoneNumber + "&age=" + age,
+                type: 'POST',
+                success: function(res){
+                    console.log(res);
+                    _refresh();
+                },
+                error: function(res){
+                    alert(JSON.stringify(res));
+                }
+            });
+        }
+
+        function _delete() {
+            var id = document.getElementById("deleteID").value;
+            $.ajax({
+                url: "/AddressBook/delete?id=" + id,
+                type: 'GET',
+                success: function(res){
+                    console.log(res);
+                    _refresh();
+                },
+                error: function(res){
+                    alert(JSON.stringify(res));
+                }
+            });
+        }
+    </script>
+</body>
+</html>
