@@ -13,17 +13,19 @@ public class WebController {
 
     @GetMapping("/index")
     public String questionnaire(Model model){
-        model.addAttribute("questionnaire",new Questionnaire());
+        model.addAttribute("Questionnaire",new Questionnaire());
         return "index";
     }
 
     @ResponseBody
-    @PostMapping(value = "/submitQuestionnaire")
+    @PostMapping(value = "/index")
     public Questionnaire questionnaireForm(@ModelAttribute Questionnaire ques, Model model){
-        System.out.println(ques.getEmail() + ques.getName());
-        model.addAttribute(ques);
-        QRepository.save(ques);
-        return ques;
+        Questionnaire q = new Questionnaire();
+        q = ques;
+        System.out.println(q.getEmail() + q.getName());
+        model.addAttribute(q);
+        //QRepository.save(q);
+        return q;
     }
 
 }

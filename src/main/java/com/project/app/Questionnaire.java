@@ -78,15 +78,16 @@ public class Questionnaire {
 
 
 
-    public Questionnaire(boolean remainInResidence, boolean needSupport, String supportType, String symptoms){
+    public Questionnaire(String name, String email, boolean remainInResidence, boolean needSupport,boolean experienceSymptoms ){
+        this.name = name;
+        this.email = email;
         this.remainInResidence = remainInResidence;
         this.needSupport = needSupport;
-        this.supportType = supportType;
-        this.symptoms = symptoms;
+        this.experienceSymptoms = experienceSymptoms;
     }
 
     public Questionnaire(){
-        this(true,false,null,"none");
+//        this("unknown","unknown",true,false,null,"none");
     }
 
 
