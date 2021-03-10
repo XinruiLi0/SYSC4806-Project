@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <title>COVID-19 Questionaire</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://vuejs.org/js/vue.js"></script>
+<!--    <script type="text/javascript">-->
+<!--    submitall = function(){-->
+<!--    document.getElementById("form1").submit();-->
+<!--    document.getElementById("form2").submit();-->
+<!--    }-->
+<!--    </script>-->
+</head>
+<body>
+<h1>Form</h1>
+
+<form action="#" th:action="@{/index}" th:object="${Questionaire}" method="post">
+
+    <p>Name: <input type="text" th:field="*{name}" /></p>
+    <p>Email: <input type="text" th:field="*{email}" /></p>
+
+    <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
+    <label class="radio-inline">
+        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline1" value="1"
+               th:checked="*{remainInResidence}"/>Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline2" value="0"
+               th:checked="*{remainInResidence} == false"/>No
+    </label>
+
+    <label>Do you need any support to adhere to self-isolation?</label>
+    <label class="radio-inline">
+        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline3" value="1"
+               th:checked="*{needSupport}"/>Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline4" value="0"
+               th:checked="*{needSupport} == false"/>No
+    </label>
+
+    <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
+    <label class="radio-inline">
+        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline5" value="1"
+               th:checked="*{experienceSymptoms}"/>Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline6" value="0"
+               th:checked="*{experienceSymptoms} == false"/>No
+    </label>
+
+    <p><input type="submit" value="Submit" /></p>
+</form>
+
+<div id="example-1">
+    <button @click="counter += 1">Add 1</button>
+    <p>The button above has been clicked {{ counter }} times.</p>
+</div>
+<script type="text/javascript">
+    var example1 = new Vue({
+        el: '#example-1',
+        data: {
+            counter: 0
+        }
+    })
+
+    </script>
+</body>
+</html>
+
