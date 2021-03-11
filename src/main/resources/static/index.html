@@ -1,83 +1,27 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Address Book (SPA Version)</title>
+    <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-    <h1>This is index</h1>
-    <p>Hello World!</p>
+    <h1>COVID Contract Tracing Questionnaire</h1>
+    <h2>Author: Xinyu Chen -- Front End
+                Xinrui Li -- Deployment
+                Junyuan Chen -- model, controller
+                ZeWen Chen/ Xiling Wang -- testing and documentation
+    </h2>
+    <a href="/questionnaire">Link to project page</a>
+    <p>Project Description
+        Contact tracing personnel have to frequently call Contact Cases, i.e., people who were in contact with someone known to have COVID,
+        to find out whether they are experiencing symptoms and whether they need any support while they are in quarantine. We want to relieve their work by providing a questionnaire that the Contact Cases can fill out themselves.
+        The Public Health Unit is responsible for creating the case in the system, providing the name and phone number/email of the Contact Case,
+        along with private information (NOT to be made visible to the Contact Case!) such as the Case ID that the Contact Case is related to, and the Exposure Date. The Contact Case will then receive a daily reminder (by phone or email) to fill out a questionnaire,
+        one per day for X days, asking questions such as: "since yesterday's questionnaire, have you remained inside you residence?",
+        "do you need any support to adhere to self-isolation?", (if yes) "what type of support do you need? (food/groceries, medications/prescriptions, pet care),
+        "are you experiencing any symptoms? (cough, fever, runny nose)".</p>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
 
-        });
-
-        function _refresh() {
-            $.ajax({
-                url: "/AddressBook/show",
-                type: 'GET',
-                success: function(buddies){
-                    console.log(buddies);
-                    var tableBody = document.getElementById("tableBody");
-                    while (tableBody.children[0] != null) {
-                        tableBody.removeChild(tableBody.children[0]);
-                    }
-                    buddies.buddyInfo.forEach(e => {
-                        var row = document.createElement('tr');
-                        var idCell = document.createElement('td');
-                        idCell.innerHTML = e.id;
-                        row.appendChild(idCell);
-                        var nameCell = document.createElement('td');
-                        nameCell.innerHTML = e.name;
-                        row.appendChild(nameCell);
-                        var phoneCell = document.createElement('td');
-                        phoneCell.innerHTML = e.phoneNumber;
-                        row.appendChild(phoneCell);
-                        var ageCell = document.createElement('td');
-                        ageCell.innerHTML = e.age;
-                        row.appendChild(ageCell);
-                        tableBody.appendChild(row);
-                    });
-                },
-                error: function(res){
-                    alert(res);
-                }
-            });
-        }
-
-        function _create() {
-            var name = document.getElementById("addName").value;
-            var phoneNumber = document.getElementById("addPhoneNumber").value;
-            var age = document.getElementById("addAge").value;
-            $.ajax({
-                url: "/AddressBook/create?name=" + name + "&phoneNumber=" + phoneNumber + "&age=" + age,
-                type: 'POST',
-                success: function(res){
-                    console.log(res);
-                    _refresh();
-                },
-                error: function(res){
-                    alert(JSON.stringify(res));
-                }
-            });
-        }
-
-        function _delete() {
-            var id = document.getElementById("deleteID").value;
-            $.ajax({
-                url: "/AddressBook/delete?id=" + id,
-                type: 'GET',
-                success: function(res){
-                    console.log(res);
-                    _refresh();
-                },
-                error: function(res){
-                    alert(JSON.stringify(res));
-                }
-            });
-        }
-    </script>
 </body>
 </html>
