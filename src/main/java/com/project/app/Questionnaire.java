@@ -15,7 +15,6 @@ public class Questionnaire {
     private boolean needSupport;
     private boolean experienceSymptoms;
     private String supportType;
-    private String symptoms;
     private String name;
     private String email;
 
@@ -68,17 +67,11 @@ public class Questionnaire {
         this.supportType = supportType;
     }
 
-    public String getSymptoms() {
-        return symptoms;
-    }
-
-    public void setSymptoms(String symptoms) {
-        this.symptoms = symptoms;
-    }
 
 
 
-    public Questionnaire(String name, String email, boolean remainInResidence, boolean needSupport,boolean experienceSymptoms ){
+
+    public Questionnaire(String name, String email, boolean remainInResidence, boolean needSupport,String supportType, boolean experienceSymptoms ){
         this.name = name;
         this.email = email;
         this.remainInResidence = remainInResidence;
@@ -107,13 +100,6 @@ public class Questionnaire {
         return true;
     }
 
-    public Boolean ifExpSymptoms(){
-        if(!experienceSymptoms){
-            this.setSymptoms(null);
-            return false;
-        }
-        return true;
-    }
 
 
     public String toString(){
@@ -124,10 +110,10 @@ public class Questionnaire {
             s += "no need support";
         }
 
-        s += " Symptoms Type: ";
+        s += " If experiencing Symptoms: ";
 
-        if(ifExpSymptoms()){
-            s += symptoms;
+        if(experienceSymptoms){
+            s += "yes";
         }else{
             s += " no symptoms";
         }
