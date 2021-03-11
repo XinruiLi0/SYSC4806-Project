@@ -71,7 +71,7 @@ public class Questionnaire {
 
 
 
-    public Questionnaire(String name, String email, boolean remainInResidence, boolean needSupport,String supportType, boolean experienceSymptoms ){
+    public Questionnaire(String name, String email, boolean remainInResidence, boolean needSupport, String supportType, boolean experienceSymptoms ){
         this.name = name;
         this.email = email;
         this.remainInResidence = remainInResidence;
@@ -104,17 +104,17 @@ public class Questionnaire {
 
 
     public String toString(){
-         String s = "Name: " + name + " Support Type: ";
+         String s = "Name: " + name + "\n" + " Support Type: ";
         if(ifNeedSupport()){
-            s += supportType;
+            s += supportType +"\n";
         }else{
-            s += "no need support";
+            s += "no need support \n";
         }
 
         s += " If experiencing Symptoms: ";
 
         if(experienceSymptoms){
-            s += "yes";
+            s += "yes \n" ;
         }else{
             s += " no symptoms \n";
         }
