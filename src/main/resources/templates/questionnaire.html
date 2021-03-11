@@ -6,15 +6,25 @@
     <script src="http://vuejs.org/js/vue.js"></script>
     <script type="text/javascript">
 
+     function valueChanged(){
+        if($('#optionsRadiosInline3').is(":checked")){
+            $("#specificsup").show();
+        }
+         if($('#optionsRadiosInline4').is(":checked")){
+            $("#specificsup").hide();
+        }
+     }
+
     function _fillin(){
        var name = document.getElementById("pname").value;
        var email = $("#pemail").val();
+       var supporttype = $("#sup").val();
        var inside = $('#optionsRadiosInline1').prop('checked');
        var siso = $('#optionsRadiosInline3').prop('checked');
        var symtoms = $('#optionsRadiosInline5').prop('checked');
        var result = "Patient name:" + name + "Email:" + email+ "Remain In Residence for last day:" + inside+ "Need Support:" + siso + "Felling have COVID-19 symptoms:" + symtoms;
        $.ajax({
-                url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside+ "&needSupport=" + siso + "&experienceSymptoms=" + symtoms,
+                url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside+ "&needSupport=" + siso + "&experienceSymptoms=" + symtoms + "&supportType=" + supporttype,
                 type: 'POST',
                 success: function(res){
                     $("#status").text(result);
@@ -23,7 +33,7 @@
                     alert(JSON.stringify(res));
                 }
             });
-       }
+    }
      function _search(){
        var email = $("#searchemail").val();
        $.ajax({
@@ -36,7 +46,7 @@
                     alert(JSON.stringify(res));
                 }
             });
-       }
+        }
     </script>
 </head>
 <body>
@@ -57,12 +67,16 @@
     <br>
     <label>Do you need any support to adhere to self-isolation?</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline3"/>Yes
+        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline3" onchange="valueChanged()"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline4"/>No
+        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline4" onchange="valueChanged()"/>No
     </label>
     <br>
+    <div id="specificsup" style="display: none;">
+        <label>"what type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
+        <input type="text" id="sup" placeholder="type of support"/></p>
+    </div>
     <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
     <label class="radio-inline">
         <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline5"/>Yes
