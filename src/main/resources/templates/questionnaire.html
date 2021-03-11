@@ -1,58 +1,84 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://thymeleaf.org">
 <head>
     <title>COVID-19 Questionaire</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://vuejs.org/js/vue.js"></script>
-<!--    <script type="text/javascript">-->
-<!--    submitall = function(){-->
-<!--    document.getElementById("form1").submit();-->
-<!--    document.getElementById("form2").submit();-->
-<!--    }-->
-<!--    </script>-->
+    <script type="text/javascript">
+
+    function _fillin(){
+       var name = document.getElementById("pname").value;
+       var email = $("#pemail").val();
+       var inside = $('#optionsRadiosInline1').prop('checked');
+       var siso = $('#optionsRadiosInline3').prop('checked');
+       var symtoms = $('#optionsRadiosInline5').prop('checked');
+       var result = "Patient name:" + name + "Email:" + email+ "Remain In Residence for last day:" + inside+ "Need Support:" + siso + "Felling have COVID-19 symptoms:" + symtoms;
+       $.ajax({
+                url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside+ "&needSupport=" + siso + "&experienceSymptoms=" + symtoms,
+                type: 'POST',
+                success: function(res){
+                    $("#status").text(result);
+                },
+                error: function(res){
+                    alert(JSON.stringify(res));
+                }
+            });
+       }
+     function _search(){
+       var email = $("#searchemail").val();
+       $.ajax({
+                url: "/result?email=" + email,
+                type: 'GET',
+                success: function(res){
+                    $("#status").text(res);
+                },
+                error: function(res){
+                    alert(JSON.stringify(res));
+                }
+            });
+       }
+    </script>
 </head>
 <body>
 <h1>Form</h1>
 
-<form action="#" th:action="@{/index}" th:object="${Questionnaire}" method="post">
+<form action="#"  method="post">
 
-    <p>Name: <input type="text" th:field="*{name}" /></p>
-    <p>Email: <input type="text" th:field="*{email}" /></p>
+    <p>Name: <input type="text" id="pname"/></p>
+    <p>Email: <input type="text" id="pemail"/></p>
 
     <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline1" value="1"
-               th:checked="*{remainInResidence}"/>Yes
+        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline1"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline2" value="0"
-               th:checked="*{remainInResidence} == false"/>No
+        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline2"/>No
     </label>
-
+    <br>
     <label>Do you need any support to adhere to self-isolation?</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline3" value="1"
-               th:checked="*{needSupport}"/>Yes
+        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline3"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline4" value="0"
-               th:checked="*{needSupport} == false"/>No
+        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline4"/>No
     </label>
-
+    <br>
     <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline5" value="1"
-               th:checked="*{experienceSymptoms}"/>Yes
+        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline5"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline6" value="0"
-               th:checked="*{experienceSymptoms} == false"/>No
+        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline6"/>No
     </label>
-
-    <p><input type="submit" value="Submit" /></p>
+    <br>
+    <button type="button" onclick="_fillin()">Add Questionnaire</button>
 </form>
+<br>
+<input type="text" id="searchemail"/>
+<br>
+<button type="button" onclick="_search()">Search Email</button>
 
+<p id="status"> </p>
 <div id="example-1">
     <button @click="counter += 1">Add 1</button>
     <p>The button above has been clicked {{ counter }} times.</p>
