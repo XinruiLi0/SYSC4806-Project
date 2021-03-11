@@ -115,7 +115,7 @@ public class Questionnaire {
         if(experienceSymptoms){
             s += "yes";
         }else{
-            s += " no symptoms";
+            s += " no symptoms \n";
         }
 
         return s;
