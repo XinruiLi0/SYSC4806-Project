@@ -28,9 +28,9 @@ public class WebController {
 
     @GetMapping("/result")
     @ResponseBody
-    public Questionnaire showResult(String email){
+    public String showResult(String email){
         Questionnaire q = QRepo.findByEmail(email);
-        return q;
+        return q.toString();
     }
 
 }

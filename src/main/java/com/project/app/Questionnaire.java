@@ -77,6 +77,7 @@ public class Questionnaire {
         this.remainInResidence = remainInResidence;
         this.needSupport = needSupport;
         this.experienceSymptoms = experienceSymptoms;
+        this.supportType = supportType;
     }
 
     public Questionnaire(){
