@@ -11,6 +11,7 @@ Group Member: Junyuan Chen, Xinrui Li, Xiling Wang, Xinyu Chen, Zewen Chen
 Meeting Schedule: Every Sunday and Thursday, distributed the role and responsibilities of each group member on Sunday, checked and discussed the current progress on Thursday.
 
 System Design: 
+      
       Front end:
       
       Back end:
