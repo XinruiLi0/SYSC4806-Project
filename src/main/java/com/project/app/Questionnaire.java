@@ -99,18 +99,39 @@ public class Questionnaire {
         this.id = id;
     }
 
-    public String ifNeedSupport(){
+    public Boolean ifNeedSupport(){
         if(!needSupport){
             this.setSupportType(null);
+            return false;
         }
-        return this.getSupportType();
+        return true;
     }
 
-    public String ifExpSymptoms(){
+    public Boolean ifExpSymptoms(){
         if(!experienceSymptoms){
             this.setSymptoms(null);
+            return false;
         }
-        return this.getSymptoms();
+        return true;
     }
 
+
+    public String toString(){
+         String s = "Name: " + name + " Support Type: ";
+        if(ifNeedSupport()){
+            s += supportType;
+        }else{
+            s += "no need support";
+        }
+
+        s += " Symptoms Type: ";
+
+        if(ifExpSymptoms()){
+            s += symptoms;
+        }else{
+            s += " no symptoms";
+        }
+
+        return s;
+    }
 }

@@ -20,10 +20,16 @@ public class WebController {
     @ResponseBody
     @PostMapping(value = "/questionnaire")
     public Questionnaire questionnaireForm(@ModelAttribute Questionnaire ques, Model model){
-        Questionnaire q = ques;
-        System.out.println(q.getEmail() + q.getName());
-        model.addAttribute(q);
-        QRepo.save(q);
+        model.addAttribute(ques);
+        QRepo.save(ques);
+        return ques;
+    }
+
+
+    @GetMapping("/result")
+    @ResponseBody
+    public Questionnaire showResult(String email){
+        Questionnaire q = QRepo.findByEmail(email);
         return q;
     }
 
