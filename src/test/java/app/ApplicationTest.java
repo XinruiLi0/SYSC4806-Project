@@ -38,12 +38,7 @@ class ApplicationTest {
 
     @Mock
     QuestionnaireRepo QR;
-
-    @Before
-    public void setUp(){
-        MockitoAnnotations.initMocks(this);
-    }
-
+    
     @Autowired
     private MockMvc mvc;
 
