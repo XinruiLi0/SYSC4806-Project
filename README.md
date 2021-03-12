@@ -4,17 +4,21 @@ Travis CI Link: https://travis-ci.com/github/XinruiLi0/SYSC4806-Project
 
 Heroku deploy Link: https://sysc-4806-covid-questionnaire.herokuapp.com/
 
-Group Member: Junyuan Chen, Xinrui Li, Xiling Wang, Xinyu Chen, Zewen Chen
+Group Member: 
 
-Meeting Schedule: Every Sunday and Thursday. Distributed the role and responsibilities of each group member on Sunday; Checked and discussed the current progress on Thursday.
+    Junyuan Chen, Xinrui Li, Xiling Wang, Xinyu Chen, Zewen Chen
+
+Meeting Schedule: 
+    
+    Every Sunday and Thursday. Distributed the role and responsibilities of each group member on Sunday; Checked and discussed the current progress on Thursday.
 
 Project Description:
 
-	 Contact tracing personnel have to frequently call Contact Cases, i.e., people who were in contact with someone known to have COVID, to find out whether they are experiencing symptoms and whether they need any support while they are in quarantine.
+    Contact tracing personnel have to frequently call Contact Cases, i.e., people who were in contact with someone known to have COVID, to find out whether they are experiencing symptoms and whether they need any support while they are in quarantine.
  
 	We want to relieve their work by providing a questionnaire that the Contact Cases can fill out themselves.
 
-        The Public Health Unit is responsible for creating the case in the system, providing the name and phone number/email of the Contact Case, along with private information (NOT to be made visible to the Contact Case!) such as the Case ID that the Contact Case is related to, and the Exposure Date. The Contact Case will then receive a daily reminder (by phone or email) to fill out a questionnaire, one per day for X days, asking questions such as: "since yesterday's questionnaire, have you remained inside you residence?", "do you need any support to adhere to self-isolation?", (if yes) "what type of support do you need? (food/groceries, medications/prescriptions, pet care), "are you experiencing any symptoms? (cough, fever, runny nose).
+    The Public Health Unit is responsible for creating the case in the system, providing the name and phone number/email of the Contact Case, along with private information (NOT to be made visible to the Contact Case!) such as the Case ID that the Contact Case is related to, and the Exposure Date. The Contact Case will then receive a daily reminder (by phone or email) to fill out a questionnaire, one per day for X days, asking questions such as: "since yesterday's questionnaire, have you remained inside you residence?", "do you need any support to adhere to self-isolation?", (if yes) "what type of support do you need? (food/groceries, medications/prescriptions, pet care), "are you experiencing any symptoms? (cough, fever, runny nose).
 
 
 Sart up Instructions:
