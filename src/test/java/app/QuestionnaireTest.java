@@ -1,6 +1,6 @@
-package com.project.app;
+package app;
 
-import com.project.app.Questionnaire;
+import app.Questionnaire;
 import org.junit.Test;
 import org.testng.Assert;
 
