@@ -49,7 +49,7 @@ System Design:
 
   	WebController: Controller of the questionnaire project that inter-connect model and view by spring
 
-      	Questionnaire: Model part for the questionnaire to information contained in questionnaire.
+    Questionnaire: Model part for the questionnaire to information contained in questionnaire.
 
 	QuestionnaireRepo: Used as a temporary database to store model instance
   
