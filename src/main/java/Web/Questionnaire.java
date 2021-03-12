@@ -1,4 +1,4 @@
-package app;
+package Web;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
