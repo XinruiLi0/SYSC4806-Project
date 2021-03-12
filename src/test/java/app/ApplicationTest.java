@@ -27,18 +27,12 @@ import static org.testng.AssertJUnit.assertEquals;
 
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
 class ApplicationTest {
-
-    @InjectMocks
-    WebController webController;
-    //this can be used for further improvement
 
     @Mock
     QuestionnaireRepo QR;
-    
+
     @Autowired
     private MockMvc mvc;
 
