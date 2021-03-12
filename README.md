@@ -62,11 +62,11 @@ Contributions:
 
 	Xinyu Chen -- Front-End
 
-        Xinrui Li -- Deployment / Database
+    Xinrui Li -- Deployment / Database
 
-        Junyuan Chen -- Back-End
+    Junyuan Chen -- Back-End
 
-        Zewen Chen -- Testing
+    Zewen Chen -- Testing
 
 	Xiling Wang -- Testing and documentation
 
