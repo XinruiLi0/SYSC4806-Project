@@ -1,6 +1,8 @@
-package com.project.app;
+package app;
 
 
+import app.Questionnaire;
+import app.QuestionnaireRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.testng.AssertJUnit.assertEquals;
 
 
@@ -34,12 +38,12 @@ class ApplicationTest {
 
     }
 
-   /* @Test
+    @Test
     public void postQuestionnaireTest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/questionnaire");
         mvc.perform(request).andDo(print()).andExpect(content().string(equalTo(
-            "{\"id\":1,\"remainInResidence\":false,\"needSupport\":false,\"experienceSymptoms\":false,\"supportType\":null,\"name\":null,\"email\":null}")));
-    }*/
+                "{\"id\":1,\"remainInResidence\":false,\"needSupport\":false,\"experienceSymptoms\":false,\"supportType\":null,\"name\":null,\"email\":null}")));
+    }
 
     @Test
     public void repoEamilSearchTest() {
@@ -52,7 +56,8 @@ class ApplicationTest {
     @Test
     public void getResultTest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/result");
-        mvc.perform(request).andDo(print()).andExpect(content().string(equalTo("")));
+        mvc.perform(request).andDo(print()).andExpect(content().string(equalTo(
+                "")));
     }
 
 }
