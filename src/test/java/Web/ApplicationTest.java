@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,7 +30,6 @@ class ApplicationTest {
     public void getQuestionnaireTest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.get("/questionnaire");
         mvc.perform(request).andDo(print()).andExpect(content().string(containsString("COVID-19 Questionaire")));
-
     }
 
     @Test
