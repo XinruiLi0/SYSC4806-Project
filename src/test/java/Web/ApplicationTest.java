@@ -1,13 +1,12 @@
 package Web;
 
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
+
+import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
@@ -36,12 +35,12 @@ class ApplicationTest {
 
     }
 
-    /*@Test
+    @Test
     public void postQuestionnaireTest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/questionnaire");
         mvc.perform(request).andDo(print()).andExpect(content().string(equalTo(
                 "{\"id\":1,\"remainInResidence\":false,\"needSupport\":false,\"experienceSymptoms\":false,\"supportType\":null,\"name\":null,\"email\":null}")));
-    }*/
+    }
 
     @Test
     public void repoEamilSearchTest() {
