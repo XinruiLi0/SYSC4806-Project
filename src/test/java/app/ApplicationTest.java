@@ -62,7 +62,7 @@ class ApplicationTest {
     }
 
     @Test
-    public void Repo_Eamil_search_Test() {
+    public void repoEamilSearchTest() {
         Questionnaire ques = new Questionnaire("Jake","jake@gmail.com",false,false,null,false);
         QR.save(ques);
         Questionnaire result = QR.findByEmail("jake@gmail.com");
