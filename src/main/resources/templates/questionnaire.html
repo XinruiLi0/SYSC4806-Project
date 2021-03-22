@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
 
      function valueChanged(){
@@ -22,12 +23,12 @@
        var inside = $('#optionsRadiosInline1').prop('checked');
        var siso = $('#optionsRadiosInline3').prop('checked');
        var symtoms = $('#optionsRadiosInline5').prop('checked');
-       var result = "Patient name:" + name + "Email:" + email+ "Remain In Residence for last day:" + inside+ "Need Support:" + siso + "Felling have COVID-19 symptoms:" + symtoms;
+       var result = "<br>Patient name: " + name + "<br>Email: " + email+ "<br>Remain In Residence for last day: " + inside+ " <br>Need Support: " + siso + "<br>Feeling have COVID-19 symptoms: " + symtoms;
        $.ajax({
                 url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside+ "&needSupport=" + siso + "&experienceSymptoms=" + symtoms + "&supportType=" + supporttype,
                 type: 'POST',
                 success: function(res){
-                    $("#status").text(result);
+                    $("#status").html(result);
                 },
                 error: function(res){
                     alert(JSON.stringify(res));
@@ -50,62 +51,110 @@
     </script>
 </head>
 <body>
-<h1>Form</h1>
+<h1>COVID-19 Self-declare Form</h1>
 
-<form action="#"  method="post">
-
-    <p>Name: <input type="text" id="pname"/></p>
-    <p>Email: <input type="text" id="pemail"/></p>
+<div id="selfform">
+    <p>Name: <input type="text" id="pname" v-model="Name"/></p>
+    <p>Email: <input type="text" id="pemail" v-model="Email"/></p>
 
     <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline1"/>Yes
+        <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline1" id="optionsRadiosInline2"/>No
+        <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false"/>No
     </label>
+    <br>
     <br>
     <label>Do you need any support to adhere to self-isolation?</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline3" onchange="valueChanged()"/>Yes
+        <input type="radio" id="optionsRadiosInline3" onchange="valueChanged()" v-model="support" v-bind:value="true"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline2" id="optionsRadiosInline4" onchange="valueChanged()"/>No
+        <input type="radio" id="optionsRadiosInline4" onchange="valueChanged()" v-model="support" v-bind:value="false"/>No
     </label>
+    <br>
     <br>
     <div id="specificsup" style="display: none;">
         <label>"what type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
-        <input type="text" id="sup" placeholder="type of support"/></p>
+        <input type="text" id="sup" placeholder="type of support" v-model="supway"/></p>
     </div>
     <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline5"/>Yes
+        <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true"/>Yes
     </label>
     <label class="radio-inline">
-        <input type="radio" name="optionsRadiosInline3" id="optionsRadiosInline6"/>No
+        <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false"/>No
     </label>
     <br>
-    <button type="button" onclick="_fillin()">Add Questionnaire</button>
-</form>
-<br>
-<input type="text" id="searchemail"/>
-<br>
-<button type="button" onclick="_search()">Search Email</button>
-
-<p id="status"> </p>
-<div id="example-1">
-    <button @click="counter += 1">Add 1</button>
-    <p>The button above has been clicked {{ counter }} times.</p>
+    <br>
+    <button type="button" @click="add">Add Questionnaire through VUE.js</button>
 </div>
+<br>
 <script type="text/javascript">
-    var example1 = new Vue({
-        el: '#example-1',
+
+    var sq = new Vue({
+        el: '#selfform',
         data: {
-            counter: 0
+            Name: "",
+            Email: "",
+            inside: "",
+            support: "",
+            symptoms: "",
+            supway: ""
+        },
+        methods:{
+                add:function(){
+                    let params = new URLSearchParams();
+                    params.append("name", this.Name);
+                    params.append("email", this.Email);
+                    params.append("remainInResidence", this.inside);
+                    params.append("needSupport", this.support);
+                    params.append("experienceSymptoms", this.symptoms);
+                    params.append("supportType", this.supway);
+                    axios.post("/questionnaire", params).then((res)=>{
+                    alert(res);
+                       var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email+ "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
+                       $("#status").html(result);
+                    }).catch(function (err) {
+                        console.log(err);
+                    })
+             }
         }
     })
+</script>
+<button type="button" onclick="_fillin()">Add Questionnaire through AJAX</button>
+<br>
+<br>
+<div id="searchUser">
+    <input type="text" v-model="userEmail"/>
+    <button @click="search">Search Email</button>
+</div>
 
-    </script>
+<script type="text/javascript">
+    var su = new Vue({
+        el: '#searchUser',
+        data: {
+            userEmail: ""
+        },
+        methods:{
+                search:function(){
+                    axios.get("/result", {
+                    params: {
+                        email: this.userEmail,
+                    },
+                    })
+                    .then((res)=>{
+                      $("#status").text(res.data);
+                    }).catch(function (err) {
+                        console.log(err);
+                    })
+             }
+        }
+    })
+</script>
+<p id="status"> </p>
+
 </body>
 </html>
 
