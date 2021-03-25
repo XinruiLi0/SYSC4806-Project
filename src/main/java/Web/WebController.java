@@ -22,7 +22,7 @@ public class WebController {
 
     @ResponseBody
     @PostMapping(value = "/questionnaire")
-    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model) throws SQLException {
+    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model)  {
         model.addAttribute(ques);
         String email = ques.getEmail();
         String query = "select * from Questionnaire where email = '"+ email+"'";
@@ -30,22 +30,27 @@ public class WebController {
         int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
         int inned = ques.isNeedSupport() == true? 1 : 0;
         String updateQuery = "update Questionnaire set EemainInResidence = '"+inres+ "'," +"EeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
-        if(executeSQL(query,false).next()){
-            executeSQL(updateQuery,true);
-        }else {
+        try {
+            if(executeSQL(query,false).next()){
+                executeSQL(updateQuery,true);
+            }else {
 
-            String first = "INSERT INTO Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
-            String second = first + inres + "," + inned + "," + isexp + ", '" + ques.getSupportType() + "','" + ques.getName() + "','" + ques.getEmail() + "')";
-            executeSQL(second, true);
+                String first = "INSERT INTO Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
+                String second = first + inres + "," + inned + "," + isexp + ", '" + ques.getSupportType() + "','" + ques.getName() + "','" + ques.getEmail() + "')";
+                executeSQL(second, true);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
 
     @GetMapping("/result")
     @ResponseBody
-    public String showResult(String email) throws SQLException {
+    public String showResult(String email) {
         String query = "select * from Questionnaire where email = '"+ email+"'";
         ResultSet rs = executeSQL(query,false);
+
         String result = convertToString(rs);
         return result;
 
@@ -80,7 +85,7 @@ public class WebController {
         return res;
     }
 
-    public String convertToString(ResultSet rs) throws SQLException {
+    public String convertToString(ResultSet rs)  {
         String remainInResidence = "Remain in residence: ";
         String needSupport = "If need support: ";
         String supportType = "Needed support type: ";
@@ -88,28 +93,33 @@ public class WebController {
         String name = "Name: ";
         String email = "Email: ";
         boolean ifNeedSupport = false;
-        while (rs.next()) {
-            name += rs.getString("Name") + "\n";
-            email += rs.getString("Email") + "\n";
-            if (!rs.getBoolean("EemainInResidence")){
-                remainInResidence += "No\n";
-            }else{
-                remainInResidence += "Yes\n";
+        try {
+            while (rs.next()) {
+
+                name += rs.getString("Name") + "\n";
+                email += rs.getString("Email") + "\n";
+                if (!rs.getBoolean("EemainInResidence")) {
+                    remainInResidence += "No\n";
+                } else {
+                    remainInResidence += "Yes\n";
+                }
+                if (!rs.getBoolean("EeedSupport")) {
+                    needSupport += "No\n";
+                } else {
+                    needSupport += "Yes\n";
+                    ifNeedSupport = true;
+                }
+                if (rs.getString("SupportType") != null) {
+                    supportType += rs.getString("SupportType") + "\n";
+                }
+                if (!rs.getBoolean("ExperienceSymptoms")) {
+                    experienceSymptoms += "No\n";
+                } else {
+                    experienceSymptoms += "Yes\n";
+                }
             }
-            if(!rs.getBoolean("EeedSupport")){
-                needSupport += "No\n";
-            }else{
-                needSupport += "Yes\n";
-                ifNeedSupport = true;
-            }
-            if(rs.getString("SupportType")!= null){
-                supportType += rs.getString("SupportType") +"\n";
-            }
-            if(!rs.getBoolean("ExperienceSymptoms")){
-                experienceSymptoms += "No\n";
-            }else {
-                experienceSymptoms += "Yes\n";
-            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
         if(ifNeedSupport){
