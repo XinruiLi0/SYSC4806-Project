@@ -33,13 +33,6 @@ class ApplicationTest {
     }
 
     @Test
-    public void postQuestionnaireTest() throws Exception {
-        RequestBuilder request = MockMvcRequestBuilders.post("/questionnaire");
-        mvc.perform(request).andDo(print()).andExpect(content().string(equalTo(
-                "{\"id\":1,\"remainInResidence\":false,\"needSupport\":false,\"experienceSymptoms\":false,\"supportType\":null,\"name\":null,\"email\":null}")));
-    }
-
-    @Test
     public void repoEamilSearchTest() {
         Questionnaire ques = new Questionnaire("Jake","jake@gmail.com",false,false,null,false);
         QR.save(ques);
