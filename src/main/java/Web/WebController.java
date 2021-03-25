@@ -21,10 +21,14 @@ public class WebController {
 
     @ResponseBody
     @PostMapping(value = "/questionnaire")
-    public Questionnaire questionnaireForm(@ModelAttribute Questionnaire ques, Model model) {
+    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model) {
         model.addAttribute(ques);
-        QRepo.save(ques);
-        return ques;
+        int inres = ques.isRemainInResidence() == true? 1 : 0;
+        int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
+        int inned = ques.isNeedSupport() == true? 1 : 0;
+        String first = "INSERT INTO Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
+        String second = first + inres +","+isexp+","+inned+", '"+ques.getSupportType()+"','"+ ques.getName()+"','"+ques.getEmail()+"')";
+        executeSQL(second, true);
     }
 
 
@@ -43,9 +47,9 @@ public class WebController {
      */
     private static ResultSet executeSQL(String query, boolean isUpdate) {
         String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://174.115.241.123;DatabaseName=project";
+        String dbURL = "jdbc:sqlserver://ivmsdb.cs17etkshc9t.us-east-1.rds.amazonaws.com;DatabaseName=sysc4806";
         String userName = "admin";
-        String userPwd = "admin";
+        String userPwd = "ivmsdbadmin";
 
         ResultSet res = null;
         try {

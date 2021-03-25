@@ -47,7 +47,7 @@
                     alert(JSON.stringify(res));
                 }
             });
-        }
+     }
     </script>
 </head>
 <body>
@@ -113,7 +113,6 @@
                     params.append("experienceSymptoms", this.symptoms);
                     params.append("supportType", this.supway);
                     axios.post("/questionnaire", params).then((res)=>{
-                    alert(res);
                        var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email+ "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
                        $("#status").html(result);
                     }).catch(function (err) {
