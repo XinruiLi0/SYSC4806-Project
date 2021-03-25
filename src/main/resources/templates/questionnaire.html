@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+
 <head>
     <title>COVID-19 Questionaire</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -7,107 +8,209 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
 
-     function valueChanged(){
-        if($('#optionsRadiosInline3').is(":checked")){
-            $("#specificsup").show();
+        function valueChanged() {
+            if ($('#optionsRadiosInline3').is(":checked")) {
+                $("#specificsup").show();
+            }
+            if ($('#optionsRadiosInline4').is(":checked")) {
+                $("#specificsup").hide();
+            }
         }
-         if($('#optionsRadiosInline4').is(":checked")){
-            $("#specificsup").hide();
-        }
-     }
 
-    function _fillin(){
-       var name = document.getElementById("pname").value;
-       var email = $("#pemail").val();
-       var supporttype = $("#sup").val();
-       var inside = $('#optionsRadiosInline1').prop('checked');
-       var siso = $('#optionsRadiosInline3').prop('checked');
-       var symtoms = $('#optionsRadiosInline5').prop('checked');
-       var result = "<br>Patient name: " + name + "<br>Email: " + email+ "<br>Remain In Residence for last day: " + inside+ " <br>Need Support: " + siso + "<br>Feeling have COVID-19 symptoms: " + symtoms;
-       $.ajax({
-                url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside+ "&needSupport=" + siso + "&experienceSymptoms=" + symtoms + "&supportType=" + supporttype,
+        function _fillin() {
+            var name = document.getElementById("pname").value;
+            var email = $("#pemail").val();
+            var supporttype = $("#sup").val();
+            var inside = $('#optionsRadiosInline1').prop('checked');
+            var siso = $('#optionsRadiosInline3').prop('checked');
+            var symtoms = $('#optionsRadiosInline5').prop('checked');
+            var result = "<br>Patient name: " + name + "<br>Email: " + email + "<br>Remain In Residence for last day: " + inside + " <br>Need Support: " + siso + "<br>Feeling have COVID-19 symptoms: " + symtoms;
+            $.ajax({
+                url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside + "&needSupport=" + siso + "&experienceSymptoms=" + symtoms + "&supportType=" + supporttype,
                 type: 'POST',
-                success: function(res){
+                success: function (res) {
                     $("#status").html(result);
                 },
-                error: function(res){
+                error: function (res) {
                     alert(JSON.stringify(res));
                 }
             });
-    }
-     function _search(){
-       var email = $("#searchemail").val();
-       $.ajax({
+        }
+        function _search() {
+            var email = $("#searchemail").val();
+            $.ajax({
                 url: "/result?email=" + email,
                 type: 'GET',
-                success: function(res){
+                success: function (res) {
                     $("#status").text(res);
                 },
-                error: function(res){
+                error: function (res) {
                     alert(JSON.stringify(res));
                 }
             });
-     }
+        }
     </script>
+
+    <style>
+        body{
+    background-color: whitesmoke;
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0mm;
+
+}
+
+.box1{
+    background-color:rgb(255, 224, 77);
+    padding: 30px;
+    text-align: center;
+
+}
+
+h1{
+    background-color: cadetblue;
+    padding: 50px;
+    text-align: left(10px);
+    font-size: 50px;
+    margin: 0mm;
+}
+
+.instruction{
+    background-color: lightgray;
+    margin-top: 50px;
+    padding:10px;
+    text-align: center;
+
+
+}
+
+.AJAXbutton{
+    padding-left: 85px;
+}
+
+.searchemail{
+    padding-left: 85px;
+}
+
+.nameEmail{
+    padding-left: 85px;
+}
+
+.q1{
+    background-color: #e6e6e6;
+    padding-left: 85px;
+}
+
+.q2{
+    background-color: #f2f2f2;
+    padding-left: 85px;
+}
+
+.q3{
+    background-color: #e6e6e6;
+    padding-left: 85px;
+}
+
+.vue{
+    padding-left: 85px;
+}
+
+    </style>
 </head>
+
 <body>
-<h1>COVID-19 Self-declare Form</h1>
+ 
 
-<div>
-    <p> Instruction: If you are a return user try to update your status, by clicking the add/update button with the same account information (name, email) after you fill out the questionnaire again. The page will automatically cover your previous record with your newest questionnaire </p>
+<div class="box1">
+    <label>Stay at home except for essential travel and follow the restrictions and public health measures.</label>
 </div>
-<div id="selfform">
-    <p>Name: <input type="text" id="pname" v-model="Name"/></p>
-    <p>Email: <input type="text" id="pemail" v-model="Email"/></p>
 
-    <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
-    <label class="radio-inline">
-        <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true"/>Yes
-    </label>
-    <label class="radio-inline">
-        <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false"/>No
-    </label>
-    <br>
-    <br>
-    <label>Do you need any support to adhere to self-isolation?</label>
-    <label class="radio-inline">
-        <input type="radio" id="optionsRadiosInline3" onchange="valueChanged()" v-model="support" v-bind:value="true"/>Yes
-    </label>
-    <label class="radio-inline">
-        <input type="radio" id="optionsRadiosInline4" onchange="valueChanged()" v-model="support" v-bind:value="false"/>No
-    </label>
-    <br>
-    <br>
-    <div id="specificsup" style="display: none;">
-        <label>"what type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
-        <input type="text" id="sup" placeholder="type of support" v-model="supway"/></p>
+<h1>COVID-19 Self-Declare Form</h1>
+
+<p class="instruction"> Instruction: If you are a return user try to update your status, by clicking the add/update button with the same account information (name, email) after you fill out the questionnaire again. The page will automatically cover your previous record with your newest questionnaire </p>
+
+
+<div class="fillform" id="selfform">
+
+    <p class="nameEmail">
+        Name: <input type="text" id="pname" v-model="Name" />
+        Email: <input type="text" id="pemail" v-model="Email" />
+    </p>
+
+
+    <div class="q1">
+        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
+        <br>
+        <br>
+        <label class="radio-inline">
+            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes
+        </label>
+        <label class="radio-inline">
+            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No
+        </label>
     </div>
-    <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
-    <label class="radio-inline">
-        <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true"/>Yes
-    </label>
-    <label class="radio-inline">
-        <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false"/>No
-    </label>
+
+
+    <div class="q2">
+        <label>Do you need any support to adhere to self-isolation?</label>
+        <br>
+        <br>
+
+        <label class="radio-inline">
+            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged()" v-model="support"
+                   v-bind:value="true" />Yes
+        </label>
+        <label class="radio-inline">
+            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged()" v-model="support"
+                   v-bind:value="false" />No
+        </label>
+
+        <br>
+        <br>
+
+        <div id="specificsup" style="display: none;">
+            <label>"what type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
+            <input type="text" id="sup" placeholder="type of support" v-model="supway" /></p>
+            <br>
+
+
+        </div>
+    </div>
+
+    <div class="q3">
+        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
+        <br>
+        <br>
+        <label class="radio-inline">
+            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes
+        </label>
+        <label class="radio-inline">
+            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No
+        </label>
+    </div>
     <br>
     <br>
-    <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
+    <div class="vue">
+        <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
+    </div>
 </div>
 <br>
 <script type="text/javascript">
 
-    var sq = new Vue({
-        el: '#selfform',
-        data: {
-            Name: "",
-            Email: "",
-            inside: "",
-            support: "",
-            symptoms: "",
-            supway: ""
-        },
-        methods:{
-                add:function(){
+        var sq = new Vue({
+            el: '#selfform',
+            data: {
+                Name: "",
+                Email: "",
+                inside: "",
+                support: "",
+                symptoms: "",
+                supway: ""
+            },
+            methods: {
+                add: function () {
                     let params = new URLSearchParams();
                     params.append("name", this.Name);
                     params.append("email", this.Email);
@@ -115,48 +218,51 @@
                     params.append("needSupport", this.support);
                     params.append("experienceSymptoms", this.symptoms);
                     params.append("supportType", this.supway);
-                    axios.post("/questionnaire", params).then((res)=>{
-                       var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email+ "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
-                       $("#status").html(result);
+                    axios.post("/questionnaire", params).then((res) => {
+                        var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
+                        $("#status").html(result);
                     }).catch(function (err) {
                         console.log(err);
                     })
-             }
-        }
-    })
-</script>
-<button type="button" onclick="_fillin()">Add/Update Questionnaire through AJAX</button>
+                }
+            }
+        })
+    </script>
+<div class="AJAXbutton">
+    <button type="button" onclick="_fillin()">Add/Update Questionnaire through AJAX</button>
+</div>
+
 <br>
 <br>
-<div id="searchUser">
-    <input type="text" v-model="userEmail"/>
+<div class="searchemail" id="searchUser">
+    <input type="text" v-model="userEmail" />
     <button @click="search">Search Email</button>
 </div>
 
 <script type="text/javascript">
-    var su = new Vue({
-        el: '#searchUser',
-        data: {
-            userEmail: ""
-        },
-        methods:{
-                search:function(){
+        var su = new Vue({
+            el: '#searchUser',
+            data: {
+                userEmail: ""
+            },
+            methods: {
+                search: function () {
                     axios.get("/result", {
-                    params: {
-                        email: this.userEmail,
-                    },
+                        params: {
+                            email: this.userEmail,
+                        },
                     })
-                    .then((res)=>{
-                      $("#status").text(res.data);
-                    }).catch(function (err) {
-                        console.log(err);
-                    })
-             }
-        }
-    })
-</script>
+                        .then((res) => {
+                            $("#status").text(res.data);
+                        }).catch(function (err) {
+                            console.log(err);
+                        })
+                }
+            }
+        })
+    </script>
 <p id="status"> </p>
 
 </body>
-</html>
 
+</html>
