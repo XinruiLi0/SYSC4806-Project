@@ -32,7 +32,12 @@ class ApplicationTest {
         mvc.perform(request).andDo(print()).andExpect(content().string(containsString("COVID-19 Questionaire")));
     }
 
-
+    @Test
+    public void postQuestionnaireTest() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/questionnaire");
+        mvc.perform(request).andDo(print()).andExpect(content().string(equalTo(
+                "{\"id\":1,\"remainInResidence\":false,\"needSupport\":false,\"experienceSymptoms\":false,\"supportType\":null,\"name\":null,\"email\":null}")));
+    }
 
     @Test
     public void repoEamilSearchTest() {
