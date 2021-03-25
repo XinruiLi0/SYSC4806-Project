@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.*;
 
 
+
 @Controller
 public class WebController {
 
@@ -21,22 +22,33 @@ public class WebController {
 
     @ResponseBody
     @PostMapping(value = "/questionnaire")
-    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model) {
+    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model) throws SQLException {
         model.addAttribute(ques);
+        String email = ques.getEmail();
+        String query = "select * from Questionnaire where email = '"+ email+"'";
         int inres = ques.isRemainInResidence() == true? 1 : 0;
         int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
         int inned = ques.isNeedSupport() == true? 1 : 0;
-        String first = "INSERT INTO Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
-        String second = first + inres +","+isexp+","+inned+", '"+ques.getSupportType()+"','"+ ques.getName()+"','"+ques.getEmail()+"')";
-        executeSQL(second, true);
+        String updateQuery = "update Questionnaire set EemainInResidence = '"+inres+ "'," +"EeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
+        if(executeSQL(query,false).next()){
+            executeSQL(updateQuery,true);
+        }else {
+
+            String first = "INSERT INTO Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
+            String second = first + inres + "," + inned + "," + isexp + ", '" + ques.getSupportType() + "','" + ques.getName() + "','" + ques.getEmail() + "')";
+            executeSQL(second, true);
+        }
     }
 
 
     @GetMapping("/result")
     @ResponseBody
-    public String showResult(String email) {
-        Questionnaire q = QRepo.findByEmail(email);
-        return q.toString();
+    public String showResult(String email) throws SQLException {
+        String query = "select * from Questionnaire where email = '"+ email+"'";
+        ResultSet rs = executeSQL(query,false);
+        String result = convertToString(rs);
+        return result;
+
     }
 
     /**
@@ -66,6 +78,45 @@ public class WebController {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public String convertToString(ResultSet rs) throws SQLException {
+        String remainInResidence = "Remain in residence: ";
+        String needSupport = "If need support: ";
+        String supportType = "Needed support type: ";
+        String experienceSymptoms = "If experiencing Symptoms ";
+        String name = "Name: ";
+        String email = "Email: ";
+        boolean ifNeedSupport = false;
+        while (rs.next()) {
+            name += rs.getString("Name") + "\n";
+            email += rs.getString("Email") + "\n";
+            if (!rs.getBoolean("EemainInResidence")){
+                remainInResidence += "No\n";
+            }else{
+                remainInResidence += "Yes\n";
+            }
+            if(!rs.getBoolean("EeedSupport")){
+                needSupport += "No\n";
+            }else{
+                needSupport += "Yes\n";
+                ifNeedSupport = true;
+            }
+            if(rs.getString("SupportType")!= null){
+                supportType += rs.getString("SupportType") +"\n";
+            }
+            if(!rs.getBoolean("ExperienceSymptoms")){
+                experienceSymptoms += "No\n";
+            }else {
+                experienceSymptoms += "Yes\n";
+            }
+        }
+
+        if(ifNeedSupport){
+            return name + email + remainInResidence + needSupport +supportType + experienceSymptoms;
+        }else{
+            return name + email + remainInResidence + needSupport + experienceSymptoms;
+        }
     }
 
 //    public static void main(String[] args) {
