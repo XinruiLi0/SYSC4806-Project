@@ -47,9 +47,9 @@ public class WebController {
      */
     private static ResultSet executeSQL(String query, boolean isUpdate) {
         String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://174.115.241.123;DatabaseName=project";
+        String dbURL = "jdbc:sqlserver://ivmsdb.cs17etkshc9t.us-east-1.rds.amazonaws.com;DatabaseName=sysc4806";
         String userName = "admin";
-        String userPwd = "admin";
+        String userPwd = "ivmsdbadmin";
 
         ResultSet res = null;
         try {
