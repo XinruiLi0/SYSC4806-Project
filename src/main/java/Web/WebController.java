@@ -13,13 +13,24 @@ public class WebController {
 
     @Autowired
     QuestionnaireRepo QRepo;
-
+    
+    /**
+     * initialize questionnaire
+     * @param model
+     * @return
+     */
     @GetMapping("/questionnaire")
     public String questionnaire(Model model) {
         model.addAttribute("Questionnaire", new Questionnaire());
         return "questionnaire";
     }
-
+    
+    /**
+     *
+     * @param ques
+     * @param model
+     * @throws SQLException
+     */
     @ResponseBody
     @PostMapping(value = "/questionnaire")
     public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model)  {
@@ -44,7 +55,12 @@ public class WebController {
         }
     }
 
-
+    /**
+     * retrieve record from database
+     * @param email
+     * @return
+     * @throws SQLException
+     */
     @GetMapping("/result")
     @ResponseBody
     public String showResult(String email) {
@@ -84,7 +100,13 @@ public class WebController {
         }
         return res;
     }
-
+    
+    /**
+     * convert database record to String
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
     public String convertToString(ResultSet rs)  {
         String remainInResidence = "Remain in residence: ";
         String needSupport = "If need support: ";
@@ -129,8 +151,5 @@ public class WebController {
         }
     }
 
-//    public static void main(String[] args) {
-//        executeSQL("select * from Questionnaire", false);
-//        // executeSQL("insert into Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) values (0, 0, 0, 'b', 'b', 'b')", true);
-//    }
+
 }
