@@ -188,9 +188,18 @@
         props: ['question'],
         template: '<div class="q"><label>{{ question.title }}</label>'
             + '<br><br>'
-            + '<label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" onchange="displaySupport(this)" :v-model="question.type" v-bind:value="true" />Yes</label>'
-            + '<label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" onchange="displaySupport(this)" :v-model="question.type" v-bind:value="false" />No</label>'
-            + '</div>'
+            + '<label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" @change="displaySupport" :v-model="question.type" v-bind:value="true" />Yes</label>'
+            + '<label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" @change="displaySupport" :v-model="question.type" v-bind:value="false" />No</label>'
+            + '</div>',
+        methods: {
+            displaySupport(event) {
+                if (event.target.id == "optionsRadiosInline3") {
+                    $("#specificsup").show();
+                } else if (event.target.id == "optionsRadiosInline4") {
+                    $("#specificsup").hide();
+                }
+            },
+        }
     })
     var sq = new Vue({
         el: '#selfform',
