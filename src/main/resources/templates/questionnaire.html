@@ -189,25 +189,29 @@ h1{
             props: ['question'],
             template: '<div class="q"><label>{{ question.title }}</label>'
                 + '<br><br>'
-                + '<label class="radio-inline"><input type="radio" :id="question.id1" v-bind:value="true" />Yes</label>'
-                + '<label class="radio-inline"><input type="radio" :id="question.id2" v-bind:value="false" />No</label>'
+                + '<label class="radio-inline"><input type="radio" :id="question.id1" :v-model="question.type" v-bind:value="true" />Yes</label>'
+                + '<label class="radio-inline"><input type="radio" :id="question.id2" :v-model="question.type" v-bind:value="false" />No</label>'
                 + '</div>'
-                + '<br><br>'
         })
-
         var sq = new Vue({
             el: '#selfform',
             data: {
                 questions: [
                     { title: 'Since yesterday\'s questionnaire, have you remained inside you residence?',
                         id1: 'optionsRadiosInline1',
-                        id2: 'optionsRadiosInline2' },
+                        id2: 'optionsRadiosInline2',
+                        type: 'inside'
+                    },
                     { title: 'Are you experiencing any symptoms? (cough, fever, runny nose)',
                         id1: 'optionsRadiosInline5',
-                        id2: 'optionsRadiosInline6' },
+                        id2: 'optionsRadiosInline6',
+                        type: 'symptoms'
+                    },
                     { title: 'Do you need any support to adhere to self-isolation?',
                         id1: 'optionsRadiosInline3',
-                        id2: 'optionsRadiosInline4' }
+                        id2: 'optionsRadiosInline4',
+                        type: 'support'
+                    }
                 ],
                 checkboxQuestions: ["", ""],
                 checkboxIds: ["", "", "", "", "", ""],
