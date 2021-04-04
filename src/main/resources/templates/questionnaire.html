@@ -7,7 +7,6 @@
     <script src="https://vuejs.org/js/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-
         function valueChanged1() {
                 $("#specificsup").show();
 
@@ -52,21 +51,19 @@
     </script>
 
     <style>
-        body{
-    background-color: whitesmoke;
+body{
+    background-color: white;
     color: black;
     font-family: 'Times New Roman', Times, serif;
     font-size: 16px;
     font-weight: normal;
     margin: 0mm;
-
 }
 
 .box1{
     background-color:rgb(255, 224, 77);
     padding: 30px;
     text-align: center;
-
 }
 
 h1{
@@ -82,8 +79,6 @@ h1{
     margin-top: 50px;
     padding:10px;
     text-align: center;
-
-
 }
 
 .AJAXbutton{
@@ -94,22 +89,17 @@ h1{
     padding-left: 85px;
 }
 
-.nameEmail{
+.q:nth-child(odd){
     padding-left: 85px;
-}
-
-.q1{
-    background-color: #e6e6e6;
-    padding-left: 85px;
-}
-
-.q2{
     background-color: #f2f2f2;
-    padding-left: 85px;
 }
 
-.q3{
+.q:nth-child(even){
+    padding-left: 85px;
     background-color: #e6e6e6;
+}
+
+.nameEmail{
     padding-left: 85px;
 }
 
@@ -139,69 +129,87 @@ h1{
         Email: <input type="text" id="pemail" v-model="Email" />
     </p>
 
+<!--    <div class="q">-->
+<!--        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label class="radio-inline">-->
+<!--            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes-->
+<!--        </label>-->
+<!--        <label class="radio-inline">-->
+<!--            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No-->
+<!--        </label>-->
+<!--    </div>-->
 
-    <div class="q1">
-        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
+<!--    <div class="q">-->
+<!--        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label class="radio-inline">-->
+<!--            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes-->
+<!--        </label>-->
+<!--        <label class="radio-inline">-->
+<!--            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No-->
+<!--        </label>-->
+<!--    </div>-->
+
+<!--    <div class="q">-->
+<!--        <label>Do you need any support to adhere to self-isolation?</label>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label class="radio-inline">-->
+<!--            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged1()" v-model="support"-->
+<!--                   v-bind:value="true" />Yes-->
+<!--        </label>-->
+<!--        <label class="radio-inline">-->
+<!--            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged2()" v-model="support"-->
+<!--                   v-bind:value="false" />No-->
+<!--        </label>-->
+<!--    </div>-->
+
+    <CheckBox-Questions title="Since yesterday's questionnaire, have you remained inside you residence?"></CheckBox-Questions>
+
+    <div class="q" id="specificsup" style="display: none;">
         <br>
+        <label>What type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
+        <input type="text" id="sup" placeholder="type of support" v-model="supway" /></p>
         <br>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes
-        </label>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No
-        </label>
     </div>
 
-
-    <div class="q2">
-        <label>Do you need any support to adhere to self-isolation?</label>
-        <br>
-        <br>
-
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged1()" v-model="support"
-                   v-bind:value="true" />Yes
-        </label>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged2()" v-model="support"
-                   v-bind:value="false" />No
-        </label>
-
-        <br>
-        <br>
-
-        <div id="specificsup" style="display: none;">
-            <label>"what type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
-            <input type="text" id="sup" placeholder="type of support" v-model="supway" /></p>
-            <br>
-
-
-        </div>
-    </div>
-
-    <div class="q3">
-        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
-        <br>
-        <br>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes
-        </label>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No
-        </label>
-    </div>
     <br>
     <br>
     <div class="vue">
         <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
     </div>
+
 </div>
 <br>
 <script type="text/javascript">
+        Vue.component('CheckBox-Questions', {
+            props: ['title'],
+            template: '<div class="q"><label>{{ title }}</label>'
+                + '<br><br>'
+                + '<label class="radio-inline"><input type="radio" id="id1" v-model="inside" v-bind:value="true" />Yes</label>'
+                + '<label class="radio-inline"><input type="radio" id="id2" v-model="inside" v-bind:value="false" />No</label>'
+                + '</div>'
+        })
 
         var sq = new Vue({
             el: '#selfform',
             data: {
+                questions: [
+                    { title: 'Since yesterday\'s questionnaire, have you remained inside you residence?',
+                        id1: 'optionsRadiosInline1',
+                        id2: 'optionsRadiosInline2' },
+                    { title: 'Are you experiencing any symptoms? (cough, fever, runny nose)',
+                        id1: 'optionsRadiosInline5',
+                        id2: 'optionsRadiosInline6' },
+                    { title: 'Do you need any support to adhere to self-isolation?',
+                        id1: 'optionsRadiosInline3',
+                        id2: 'optionsRadiosInline4' }
+                ],
+                checkboxQuestions: ["", ""],
+                checkboxIds: ["", "", "", "", "", ""],
                 Name: "",
                 Email: "",
                 inside: "",
