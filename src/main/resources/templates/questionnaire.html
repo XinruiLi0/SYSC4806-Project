@@ -145,8 +145,8 @@
         template: `
             <div class="q"><label>{{ question.title }}</label>
             <br><br>
-             <label class="radio-inline"><input type="radio" :id="question.id1" @change="displaySupport" @input="$emit('input', $event.target.value)" value="true" />Yes</label>
-            <label class="radio-inline"><input type="radio" :id="question.id2" @change="displaySupport"  @input="$emit('input', $event.target.value)" value="false"/>No</label>
+             <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" @change="displaySupport" @input="$emit('input', $event.target.value)" value="true" />Yes</label>
+            <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" @change="displaySupport"  @input="$emit('input', $event.target.value)" value="false"/>No</label>
             </div>
             `,
         methods: {
