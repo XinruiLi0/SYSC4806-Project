@@ -103,147 +103,185 @@
 </head>
 
 <body>
-<div class="box1">
-    <label>Stay at home except for essential travel and follow the restrictions and public health measures.</label>
-</div>
-
-<h1>COVID-19 Self-Declare Form</h1>
-
-<p class="instruction"> Instruction: If you are a return user try to update your status, by clicking the add/update
-    button with the same account information (name, email) after you fill out the questionnaire again. The page will
-    automatically cover your previous record with your newest questionnaire </p>
-
-<div class="fillform" id="selfform">
-
-    <p class="nameEmail">
-        Name: <input type="text" id="pname" v-model="Name"/>
-        Email: <input type="text" id="pemail" v-model="Email"/>
-    </p>
-
-    <checkbox-question  v-bind:question="questions[0]" v-model="inside" ></checkbox-question>
-    <checkbox-question  v-bind:question="questions[1]" v-model="symptoms"></checkbox-question>
-    <checkbox-question  v-bind:question="questions[2]" v-model="support" ></checkbox-question>
-
-    <div class="q" id="specificsup" style="display: none;">
-        <br>
-        <label>What type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
-        <input type="text" id="sup" placeholder="type of support" v-model="supway"/></p>
-        <br>
+    <div class="box1">
+        <label>Stay at home except for essential travel and follow the restrictions and public health measures.</label>
     </div>
 
-    <br>
-    <br>
-    <div class="vue">
-        <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
-    </div>
+    <h1>COVID-19 Self-Declare Form</h1>
 
-</div>
-<br>
-<script type="text/javascript">
-    Vue.component('checkbox-question', {
-        props: ['question'],
-        template: `
-            <div class="q"><label>{{ question.title }}</label>
-            <br><br>
-             <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" @change="displaySupport" @input="$emit('input', $event.target.value)" value="true" />Yes</label>
-            <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" @change="displaySupport"  @input="$emit('input', $event.target.value)" value="false"/>No</label>
-            </div>
-            `,
-        methods: {
-            displaySupport(event) {
-                if (event.target.id == "optionsRadiosInline3") {
-                    $("#specificsup").show();
-                } else if (event.target.id == "optionsRadiosInline4") {
-                    $("#specificsup").hide();
-                }
-            },
-        }
-    })
-    var sq = new Vue({
-        el: '#selfform',
-        data: {
-            questions: [
-                {
-                    title: 'Since yesterday\'s questionnaire, have you remained inside you residence?',
-                    id1: 'optionsRadiosInline1',
-                    id2: 'optionsRadiosInline2',
-                    type: 'inside'
+    <p class="instruction"> Instruction: If you are a return user try to update your status, by clicking the add/update
+        button with the same account information (name, email) after you fill out the questionnaire again. The page will
+        automatically cover your previous record with your newest questionnaire </p>
+
+    <div class="fillform" id="selfform">
+
+        <p class="nameEmail">
+            Name: <input type="text" id="pname" v-model="Name"/>
+            Email: <input type="text" id="pemail" v-model="Email"/>
+        </p>
+
+        <!--    <div class="q">-->
+        <!--        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes-->
+        <!--        </label>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No-->
+        <!--        </label>-->
+        <!--    </div>-->
+
+        <!--    <div class="q">-->
+        <!--        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes-->
+        <!--        </label>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No-->
+        <!--        </label>-->
+        <!--    </div>-->
+
+        <!--    <div class="q">-->
+        <!--        <label>Do you need any support to adhere to self-isolation?</label>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged1()" v-model="support"-->
+        <!--                   v-bind:value="true" />Yes-->
+        <!--        </label>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged2()" v-model="support"-->
+        <!--                   v-bind:value="false" />No-->
+        <!--        </label>-->
+        <!--    </div>-->
+
+        <checkbox-question  v-bind:question="questions[0]" v-model="inside" ></checkbox-question>
+        <checkbox-question  v-bind:question="questions[1]" v-model="symptoms"></checkbox-question>
+        <checkbox-question  v-bind:question="questions[2]" v-model="support" ></checkbox-question>
+
+        <div class="q" id="specificsup" style="display: none;">
+            <br>
+            <label>What type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
+            <input type="text" id="sup" placeholder="type of support" v-model="supway"/></p>
+            <br>
+        </div>
+
+        <br>
+        <br>
+        <div class="vue">
+            <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
+        </div>
+
+    </div>
+    <br>
+    <script type="text/javascript">
+        Vue.component('checkbox-question', {
+            props: ['question'],
+            template: `
+                <div class="q"><label>{{ question.title }}</label>
+                <br><br>
+                <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" @change="displaySupport" @input="$emit('input', $event.target.value)" value="true" />Yes</label>
+                <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" @change="displaySupport"  @input="$emit('input', $event.target.value)" value="false"/>No</label>
+                </div>
+                `,
+            methods: {
+                displaySupport(event) {
+                    if (event.target.id == "optionsRadiosInline3") {
+                        $("#specificsup").show();
+                    } else if (event.target.id == "optionsRadiosInline4") {
+                        $("#specificsup").hide();
+                    }
                 },
-                {
-                    title: 'Are you experiencing any symptoms? (cough, fever, runny nose)',
-                    id1: 'optionsRadiosInline5',
-                    id2: 'optionsRadiosInline6',
-                    type: 'symptoms'
-                },
-                {
-                    title: 'Do you need any support to adhere to self-isolation?',
-                    id1: 'optionsRadiosInline3',
-                    id2: 'optionsRadiosInline4',
-                    type: 'support'
-                }
-            ],
-            checkboxQuestions: ["", ""],
-            checkboxIds: ["", "", "", "", "", ""],
-            Name: "",
-            Email: "",
-            inside: "",
-            support: "",
-            symptoms: "",
-            supway: ""
-        },
-        methods: {
-            add: function () {
-                let params = new URLSearchParams();
-                params.append("name", this.Name);
-                params.append("email", this.Email);
-                params.append("remainInResidence", this.inside);
-                params.append("needSupport", this.support);
-                params.append("experienceSymptoms", this.symptoms);
-                params.append("supportType", this.supway);
-                axios.post("/questionnaire", params).then((res) => {
-                    var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
-                    $("#status").html(result);
-                }).catch(function (err) {
-                    console.log(err);
-                })
             }
-        }
-    })
-</script>
-<div class="AJAXbutton">
-    <button type="button" onclick="_fillin()">Add/Update Questionnaire through AJAX</button>
-</div>
-
-<br>
-<br>
-<div class="searchemail" id="searchUser">
-    <input type="text" v-model="userEmail"/>
-    <button @click="search">Search Email</button>
-</div>
-
-<script type="text/javascript">
-    var su = new Vue({
-        el: '#searchUser',
-        data: {
-            userEmail: ""
-        },
-        methods: {
-            search: function () {
-                axios.get("/result", {
-                    params: {
-                        email: this.userEmail,
+        })
+        var sq = new Vue({
+            el: '#selfform',
+            data: {
+                questions: [
+                    {
+                        title: 'Since yesterday\'s questionnaire, have you remained inside you residence?',
+                        id1: 'optionsRadiosInline1',
+                        id2: 'optionsRadiosInline2',
+                        type: 'inside'
                     },
-                })
-                    .then((res) => {
-                        $("#status").text(res.data);
+                    {
+                        title: 'Are you experiencing any symptoms? (cough, fever, runny nose)',
+                        id1: 'optionsRadiosInline5',
+                        id2: 'optionsRadiosInline6',
+                        type: 'symptoms'
+                    },
+                    {
+                        title: 'Do you need any support to adhere to self-isolation?',
+                        id1: 'optionsRadiosInline3',
+                        id2: 'optionsRadiosInline4',
+                        type: 'support'
+                    }
+                ],
+                checkboxQuestions: ["", ""],
+                checkboxIds: ["", "", "", "", "", ""],
+                Name: "",
+                Email: "",
+                inside: "",
+                support: "",
+                symptoms: "",
+                supway: ""
+            },
+            methods: {
+                add: function () {
+                    let params = new URLSearchParams();
+                    params.append("name", this.Name);
+                    params.append("email", this.Email);
+                    params.append("remainInResidence", this.inside);
+                    params.append("needSupport", this.support);
+                    params.append("experienceSymptoms", this.symptoms);
+                    params.append("supportType", this.supway);
+                    axios.post("/questionnaire", params).then((res) => {
+                        var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
+                        $("#status").html(result);
                     }).catch(function (err) {
-                    console.log(err);
-                })
+                        console.log(err);
+                    })
+                }
             }
-        }
-    })
-</script>
-<p id="status"></p>
+        })
+    </script>
+    <div class="AJAXbutton">
+        <button type="button" onclick="_fillin()">Add/Update Questionnaire through AJAX</button>
+    </div>
+
+    <br>
+    <br>
+    <div class="searchemail" id="searchUser">
+        <input type="text" v-model="userEmail"/>
+        <button @click="search">Search Email</button>
+    </div>
+
+    <script type="text/javascript">
+        var su = new Vue({
+            el: '#searchUser',
+            data: {
+                userEmail: ""
+            },
+            methods: {
+                search: function () {
+                    axios.get("/result", {
+                        params: {
+                            email: this.userEmail,
+                        },
+                    })
+                        .then((res) => {
+                            $("#status").text(res.data);
+                        }).catch(function (err) {
+                        console.log(err);
+                    })
+                }
+            }
+        })
+    </script>
+    <p id="status"></p>
 
 </body>
 
