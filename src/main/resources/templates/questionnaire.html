@@ -12,19 +12,40 @@
             var email = $("#pemail").val();
             var supporttype = $("#sup").val();
             var inside = $('#optionsRadiosInline1').prop('checked');
+            var outside = $('#optionsRadiosInline2').prop('checked');
             var siso = $('#optionsRadiosInline3').prop('checked');
+            var fifo = $('#optionsRadiosInline4').prop('checked');
             var symtoms = $('#optionsRadiosInline5').prop('checked');
+            var symtoms2 = $('#optionsRadiosInline6').prop('checked');
             var result = "<br>Patient name: " + name + "<br>Email: " + email + "<br>Remain In Residence for last day: " + inside + " <br>Need Support: " + siso + "<br>Feeling have COVID-19 symptoms: " + symtoms;
-            $.ajax({
-                url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside + "&needSupport=" + siso + "&experienceSymptoms=" + symtoms + "&supportType=" + supporttype,
-                type: 'POST',
-                success: function (res) {
-                    $("#status").html(result);
-                },
-                error: function (res) {
-                    alert(JSON.stringify(res));
-                }
-            });
+            if (name == "" || email == "") {
+                 alert("Your Username or Email is empty. OR You leave some radio empty");
+                 return;
+            }
+            else if (inside == false && outside == false) {
+                 alert("Your stay inside radio is not choose");
+                 return;
+            }
+            else if (siso == false && fifo == false) {
+                 alert("Your whether need support radio is not choose");
+                 return;
+            }
+            else if (symtoms == false && symtoms2 == false) {
+                 alert("Your whether have symptoms radio is not choose");
+                 return;
+            }
+            else{
+                $.ajax({
+                    url: "/questionnaire?name=" + name + "&email=" + email + "&remainInResidence=" + inside + "&needSupport=" + siso + "&experienceSymptoms=" + symtoms + "&supportType=" + supporttype,
+                    type: 'POST',
+                    success: function (res) {
+                        $("#status").html(result);
+                    },
+                    error: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+            }
         }
 
         function _search() {
@@ -238,12 +259,23 @@
                     params.append("needSupport", this.support);
                     params.append("experienceSymptoms", this.symptoms);
                     params.append("supportType", this.supway);
-                    axios.post("/questionnaire", params).then((res) => {
-                        var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
-                        $("#status").html(result);
-                    }).catch(function (err) {
-                        console.log(err);
-                    })
+                    if (this.Name == "" || this.Email == "" || this.inside == null || this.support == null || this.symptoms == null) {
+                        alert("Your Username or Email is empty. OR You leave some radio empty");
+                        return;
+                    }
+                    else{
+                        axios.post("/questionnaire", params).then((res) => {
+                            var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
+                            $("#status").html(result);
+                        }).catch(function (err) {
+                            console.log(err);
+                        })
+                    }
+              }
+            },
+            computed: {
+                fullResult: function () {
+                    return 'Your name is: '+ this.Name+ '<br> Your Email is: ' + this.Email + '<br>You remained inside you residence answer is: ' + this.inside + '<br>You need any support to adhere to self-isolation answer is:' + this.support + '<br>You experiencing any symptoms? answer is:' + this.symptoms;
                 }
             }
         })
@@ -282,6 +314,8 @@
         })
     </script>
     <p id="status"></p>
+
+
 
 </body>
 
