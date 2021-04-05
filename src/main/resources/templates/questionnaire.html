@@ -120,45 +120,9 @@
         Email: <input type="text" id="pemail" v-model="Email"/>
     </p>
 
-    <!--    <div class="q">-->
-    <!--        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>-->
-    <!--        <br>-->
-    <!--        <br>-->
-    <!--        <label class="radio-inline">-->
-    <!--            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes-->
-    <!--        </label>-->
-    <!--        <label class="radio-inline">-->
-    <!--            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No-->
-    <!--        </label>-->
-    <!--    </div>-->
-
-    <!--    <div class="q">-->
-    <!--        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>-->
-    <!--        <br>-->
-    <!--        <br>-->
-    <!--        <label class="radio-inline">-->
-    <!--            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes-->
-    <!--        </label>-->
-    <!--        <label class="radio-inline">-->
-    <!--            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No-->
-    <!--        </label>-->
-    <!--    </div>-->
-
-    <!--    <div class="q">-->
-    <!--        <label>Do you need any support to adhere to self-isolation?</label>-->
-    <!--        <br>-->
-    <!--        <br>-->
-    <!--        <label class="radio-inline">-->
-    <!--            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged1()" v-model="support"-->
-    <!--                   v-bind:value="true" />Yes-->
-    <!--        </label>-->
-    <!--        <label class="radio-inline">-->
-    <!--            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged2()" v-model="support"-->
-    <!--                   v-bind:value="false" />No-->
-    <!--        </label>-->
-    <!--    </div>-->
-
-    <checkbox-question v-for="item in questions" v-bind:question="item"></checkbox-question>
+    <checkbox-question  v-bind:question="questions[0]" v-model="inside" ></checkbox-question>
+    <checkbox-question  v-bind:question="questions[1]" v-model="symptoms"></checkbox-question>
+    <checkbox-question  v-bind:question="questions[2]" v-model="support" ></checkbox-question>
 
     <div class="q" id="specificsup" style="display: none;">
         <br>
@@ -178,11 +142,13 @@
 <script type="text/javascript">
     Vue.component('checkbox-question', {
         props: ['question'],
-        template: '<div class="q"><label>{{ question.title }}</label>'
-            + '<br><br>'
-            + '<label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" @change="displaySupport" :v-model="question.type" v-bind:value="true" />Yes</label>'
-            + '<label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" @change="displaySupport" :v-model="question.type" v-bind:value="false" />No</label>'
-            + '</div>',
+        template: `
+            <div class="q"><label>{{ question.title }}</label>
+            <br><br>
+             <label class="radio-inline"><input type="radio" :id="question.id1" @change="displaySupport" @input="$emit('input', $event.target.value)" value="true" />Yes</label>
+            <label class="radio-inline"><input type="radio" :id="question.id2" @change="displaySupport"  @input="$emit('input', $event.target.value)" value="false"/>No</label>
+            </div>
+            `,
         methods: {
             displaySupport(event) {
                 if (event.target.id == "optionsRadiosInline3") {
