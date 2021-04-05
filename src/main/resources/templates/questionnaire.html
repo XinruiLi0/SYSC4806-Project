@@ -2,21 +2,11 @@
 
 <head>
     <title>COVID-19 Questionaire</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://vuejs.org/js/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-
-        function valueChanged1() {
-                $("#specificsup").show();
-
-        }
-
-        function valueChanged2() {
-                $("#specificsup").hide();
-        }
-
         function _fillin() {
             var name = document.getElementById("pname").value;
             var email = $("#pemail").val();
@@ -57,6 +47,7 @@
                 });
             }
         }
+
         function _search() {
             var email = $("#searchemail").val();
             $.ajax({
@@ -73,158 +64,185 @@
     </script>
 
     <style>
-        body{
-    background-color: whitesmoke;
-    color: black;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 16px;
-    font-weight: normal;
-    margin: 0mm;
+        body {
+            background-color: white;
+            color: black;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0mm;
+        }
 
-}
+        .box1 {
+            background-color: rgb(255, 224, 77);
+            padding: 30px;
+            text-align: center;
+        }
 
-.box1{
-    background-color:rgb(255, 224, 77);
-    padding: 30px;
-    text-align: center;
+        h1 {
+            background-color: cadetblue;
+            padding: 50px;
+            text-align: left(10px);
+            font-size: 50px;
+            margin: 0mm;
+        }
 
-}
+        .instruction {
+            background-color: lightgray;
+            margin-top: 50px;
+            padding: 10px;
+            text-align: center;
+        }
 
-h1{
-    background-color: cadetblue;
-    padding: 50px;
-    text-align: left(10px);
-    font-size: 50px;
-    margin: 0mm;
-}
+        .AJAXbutton {
+            padding-left: 85px;
+        }
 
-.instruction{
-    background-color: lightgray;
-    margin-top: 50px;
-    padding:10px;
-    text-align: center;
+        .searchemail {
+            padding-left: 85px;
+        }
 
+        .q:nth-child(odd) {
+            padding-left: 85px;
+            background-color: #f2f2f2;
+        }
 
-}
+        .q:nth-child(even) {
+            padding-left: 85px;
+            background-color: #e6e6e6;
+        }
 
-.AJAXbutton{
-    padding-left: 85px;
-}
+        .nameEmail {
+            padding-left: 85px;
+        }
 
-.searchemail{
-    padding-left: 85px;
-}
-
-.nameEmail{
-    padding-left: 85px;
-}
-
-.q1{
-    background-color: #e6e6e6;
-    padding-left: 85px;
-}
-
-.q2{
-    background-color: #f2f2f2;
-    padding-left: 85px;
-}
-
-.q3{
-    background-color: #e6e6e6;
-    padding-left: 85px;
-}
-
-.vue{
-    padding-left: 85px;
-}
+        .vue {
+            padding-left: 85px;
+        }
 
     </style>
 </head>
 
 <body>
- 
-
-<div class="box1">
-    <label>Stay at home except for essential travel and follow the restrictions and public health measures.</label>
-</div>
-
-<h1>COVID-19 Self-Declare Form</h1>
-
-<p class="instruction"> Instruction: If you are a return user try to update your status, by clicking the add/update button with the same account information (name, email) after you fill out the questionnaire again. The page will automatically cover your previous record with your newest questionnaire </p>
-
-
-<div class="fillform" id="selfform">
-
-    <p class="nameEmail">
-        Name: <input type="text" id="pname" v-model="Name" />
-        Email: <input type="text" id="pemail" v-model="Email" />
-    </p>
-
-
-    <div class="q1">
-        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>
-        <br>
-        <br>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes
-        </label>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No
-        </label>
+    <div class="box1">
+        <label>Stay at home except for essential travel and follow the restrictions and public health measures.</label>
     </div>
 
+    <h1>COVID-19 Self-Declare Form</h1>
 
-    <div class="q2">
-        <label>Do you need any support to adhere to self-isolation?</label>
-        <br>
-        <br>
+    <p class="instruction"> Instruction: If you are a return user try to update your status, by clicking the add/update
+        button with the same account information (name, email) after you fill out the questionnaire again. The page will
+        automatically cover your previous record with your newest questionnaire </p>
 
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged1()" v-model="support"
-                   v-bind:value="true" />Yes
-        </label>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged2()" v-model="support"
-                   v-bind:value="false" />No
-        </label>
+    <div class="fillform" id="selfform">
 
-        <br>
-        <br>
+        <p class="nameEmail">
+            Name: <input type="text" id="pname" v-model="Name"/>
+            Email: <input type="text" id="pemail" v-model="Email"/>
+        </p>
 
-        <div id="specificsup" style="display: none;">
-            <label>"what type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
-            <input type="text" id="sup" placeholder="type of support" v-model="supway" /></p>
+        <!--    <div class="q">-->
+        <!--        <label>Since yesterday's questionnaire, have you remained inside you residence?</label>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline1" v-model="inside" v-bind:value="true" />Yes-->
+        <!--        </label>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline2" v-model="inside" v-bind:value="false" />No-->
+        <!--        </label>-->
+        <!--    </div>-->
+
+        <!--    <div class="q">-->
+        <!--        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes-->
+        <!--        </label>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No-->
+        <!--        </label>-->
+        <!--    </div>-->
+
+        <!--    <div class="q">-->
+        <!--        <label>Do you need any support to adhere to self-isolation?</label>-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline3" onchange="valueChanged1()" v-model="support"-->
+        <!--                   v-bind:value="true" />Yes-->
+        <!--        </label>-->
+        <!--        <label class="radio-inline">-->
+        <!--            <input type="radio" id="optionsRadiosInline4" onchange="valueChanged2()" v-model="support"-->
+        <!--                   v-bind:value="false" />No-->
+        <!--        </label>-->
+        <!--    </div>-->
+
+        <checkbox-question  v-bind:question="questions[0]" v-model="inside" ></checkbox-question>
+        <checkbox-question  v-bind:question="questions[1]" v-model="symptoms"></checkbox-question>
+        <checkbox-question  v-bind:question="questions[2]" v-model="support" ></checkbox-question>
+
+        <div class="q" id="specificsup" style="display: none;">
             <br>
-
-
+            <label>What type of support do you need? (food/groceries, medications/prescriptions, pet care)</label>
+            <input type="text" id="sup" placeholder="type of support" v-model="supway"/></p>
+            <br>
         </div>
-    </div>
 
-    <div class="q3">
-        <label>Are you experiencing any symptoms? (cough, fever, runny nose)</label>
         <br>
         <br>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline5" v-model="symptoms" v-bind:value="true" />Yes
-        </label>
-        <label class="radio-inline">
-            <input type="radio" id="optionsRadiosInline6" v-model="symptoms" v-bind:value="false" />No
-        </label>
-    </div>
-    <br>
-    <div class="q3" style=font-size:20px>Your temporary Questionnaire result:</div>
-    <div class="q3" v-html="fullResult"> </div>
-    <br>
-    <div class="vue">
-        <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
-    </div>
-</div>
-<br>
-<script type="text/javascript">
+        <div class="vue">
+            <button type="button" @click="add">Add/Update Questionnaire through VUE.js</button>
+        </div>
 
+    </div>
+    <br>
+    <script type="text/javascript">
+        Vue.component('checkbox-question', {
+            props: ['question'],
+            template: `
+                <div class="q"><label>{{ question.title }}</label>
+                <br><br>
+                <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id1" @change="displaySupport" @input="$emit('input', $event.target.value)" value="true" />Yes</label>
+                <label class="radio-inline"><input type="radio" :name="question.id1" :id="question.id2" @change="displaySupport"  @input="$emit('input', $event.target.value)" value="false"/>No</label>
+                </div>
+                `,
+            methods: {
+                displaySupport(event) {
+                    if (event.target.id == "optionsRadiosInline3") {
+                        $("#specificsup").show();
+                    } else if (event.target.id == "optionsRadiosInline4") {
+                        $("#specificsup").hide();
+                    }
+                },
+            }
+        })
         var sq = new Vue({
             el: '#selfform',
             data: {
+                questions: [
+                    {
+                        title: 'Since yesterday\'s questionnaire, have you remained inside you residence?',
+                        id1: 'optionsRadiosInline1',
+                        id2: 'optionsRadiosInline2',
+                        type: 'inside'
+                    },
+                    {
+                        title: 'Are you experiencing any symptoms? (cough, fever, runny nose)',
+                        id1: 'optionsRadiosInline5',
+                        id2: 'optionsRadiosInline6',
+                        type: 'symptoms'
+                    },
+                    {
+                        title: 'Do you need any support to adhere to self-isolation?',
+                        id1: 'optionsRadiosInline3',
+                        id2: 'optionsRadiosInline4',
+                        type: 'support'
+                    }
+                ],
+                checkboxQuestions: ["", ""],
+                checkboxIds: ["", "", "", "", "", ""],
                 Name: "",
                 Email: "",
                 inside: "",
@@ -262,18 +280,18 @@ h1{
             }
         })
     </script>
-<div class="AJAXbutton">
-    <button type="button" onclick="_fillin()">Add/Update Questionnaire through AJAX</button>
-</div>
+    <div class="AJAXbutton">
+        <button type="button" onclick="_fillin()">Add/Update Questionnaire through AJAX</button>
+    </div>
 
-<br>
-<br>
-<div class="searchemail" id="searchUser">
-    <input type="text" v-model="userEmail" />
-    <button @click="search">Search Email</button>
-</div>
+    <br>
+    <br>
+    <div class="searchemail" id="searchUser">
+        <input type="text" v-model="userEmail"/>
+        <button @click="search">Search Email</button>
+    </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         var su = new Vue({
             el: '#searchUser',
             data: {
@@ -289,13 +307,13 @@ h1{
                         .then((res) => {
                             $("#status").text(res.data);
                         }).catch(function (err) {
-                            console.log(err);
-                        })
+                        console.log(err);
+                    })
                 }
             }
         })
     </script>
-<p id="status"> </p>
+    <p id="status"></p>
 
 
 
