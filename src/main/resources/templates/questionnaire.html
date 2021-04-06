@@ -299,10 +299,10 @@
                         alert("Your Username or Email is empty. OR You leave some radio empty");
                         return;
                     }
-                    // else if(!this.isEmailValid(this.email.toString())){
-                    //     alert("Your Email is not in proper form");
-                    //     return;
-                    // }
+                    else if((/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(this.Email)==false){
+                        alert("Your Email is not in proper form");
+                        return;
+                    }
                     else{
                         axios.post("/questionnaire", params).then((res) => {
                             var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
