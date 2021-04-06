@@ -64,6 +64,12 @@
     </script>
 
     <style>
+        .red{
+            border: 2px solid red;
+        }
+        .green{
+            border: 2px solid green;
+        }
         body {
             background-color: white;
             color: black;
@@ -115,14 +121,18 @@
         .nameEmail {
             padding-left: 85px;
         }
-
+        .email1{
+            padding-left: 85px;
+        }
+        .email2{
+            padding-left: 85px;
+        }
         .vue {
             padding-left: 85px;
         }
 
     </style>
 </head>
-
 <body>
     <div class="box1">
         <label>Stay at home except for essential travel and follow the restrictions and public health measures.</label>
@@ -134,11 +144,34 @@
         button with the same account information (name, email) after you fill out the questionnaire again. The page will
         automatically cover your previous record with your newest questionnaire </p>
 
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#nameEmail',
+            data:{
+                reg : /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+                Email:''
+            },
+            methods: {
+                isEmailValid: function(email) {
+                    var reg = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                    return reg.test(email);
+                }
+            }
+        })
+    </script>
+
     <div class="fillform" id="selfform">
 
-        <p class="nameEmail">
-            Name: <input type="text" id="pname" v-model="Name"/>
+        <p class="nameEmail" id="nameEmail" >
+            Name: <input type="text" id="pname" v-model="Name" />
             Email: <input type="text" id="pemail" v-model="Email"/>
+            <p class="email1" v-if="/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(Email)">
+                Email Validation Passed
+            </p>
+            <p class="email2" v-else>
+                Improper Email style
+            </p>
         </p>
 
         <!--    <div class="q">-->
@@ -266,6 +299,10 @@
                         alert("Your Username or Email is empty. OR You leave some radio empty");
                         return;
                     }
+                    else if((/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(this.Email)==false){
+                        alert("Your Email is not in proper form");
+                        return;
+                    }
                     else{
                         axios.post("/questionnaire", params).then((res) => {
                             var result = "<br>Patient name: " + this.Name + "<br>Email: " + this.Email + "<br>Remain In Residence for last day: " + this.inside + " <br>Need Support: " + this.support + "<br>Feeling have COVID-19 symptoms: " + this.symptoms;
@@ -274,7 +311,11 @@
                             console.log(err);
                         })
                     }
-              }
+              },
+                isEmailValid: function(email) {
+                    var reg = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                    return reg.test(email);
+                }
             },
             computed: {
                 fullResult: function () {
