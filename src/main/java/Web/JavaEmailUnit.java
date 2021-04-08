@@ -41,7 +41,7 @@ public class JavaEmailUnit {
             message.setRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
             message.setSubject("Questionnaire Conformation");
             String questionnaireInfo = getInfo();
-            message.setText(questionnaireInfo);
+            message.setText("Dear Participant:\n\n"+"Thank you for participanting our Covid Questionnaire! This is the confirmation email about your Covid Questionnaire. Here is a review of your questionnaire:\n\n"+questionnaireInfo+"\n regards,\n4806 Project Team");
             return message;
         } catch (Exception e) {
             Logger.getLogger(JavaEmailUnit.class.getName()).log(Level.SEVERE,"fail to prepare message",e);
