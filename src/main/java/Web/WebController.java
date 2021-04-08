@@ -11,7 +11,10 @@ import java.sql.*;
 @Controller
 public class WebController {
 
-     JavaEmailUnit emailUnit = new JavaEmailUnit();
+    @Autowired
+    QuestionnaireRepo QRepo;
+
+    JavaEmailUnit emailUnit = new JavaEmailUnit();
     
     /**
      * initialize questionnaire
