@@ -66,7 +66,7 @@ class ApplicationTest {
     }
 
     @Test
-    public void questionnaireFormTest() throws SQLException {
+    public void questionnaireFormTest() throws Exception {
         Questionnaire questionnaire = new Questionnaire();
         WebController webController = new WebController();
         model= new Model() {
