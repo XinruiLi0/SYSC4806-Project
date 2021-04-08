@@ -13,6 +13,8 @@ public class WebController {
 
     @Autowired
     QuestionnaireRepo QRepo;
+
+    JavaEmailUnit emailUnit = new JavaEmailUnit();
     
     /**
      * initialize questionnaire
@@ -33,13 +35,14 @@ public class WebController {
      */
     @ResponseBody
     @PostMapping(value = "/questionnaire")
-    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model)  {
+    public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model) throws Exception {
         model.addAttribute(ques);
         String email = ques.getEmail();
         String query = "select * from Questionnaire where email = '"+ email+"'";
         int inres = ques.isRemainInResidence() == true? 1 : 0;
         int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
         int inned = ques.isNeedSupport() == true? 1 : 0;
+        emailUnit.sendEmail(email);
         String updateQuery = "update Questionnaire set EemainInResidence = '"+inres+ "'," +"EeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
         try {
             if(executeSQL(query,false).next()){

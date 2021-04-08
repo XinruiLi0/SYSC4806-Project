@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class JavaEmailUnit {
 
 
-    public  static  void sendEmail(String recipient) throws Exception {
+    public static void sendEmail(String recipient) throws Exception {
         System.out.println("Start sending email");
         Properties properties = new Properties();
         properties.put("mail.smtp.auth","true");

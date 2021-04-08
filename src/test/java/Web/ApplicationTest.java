@@ -65,54 +65,6 @@ class ApplicationTest {
                 "")));
     }
 
-    @Test
-    public void questionnaireFormTest() throws SQLException {
-        Questionnaire questionnaire = new Questionnaire();
-        WebController webController = new WebController();
-        model= new Model() {
-            @Override
-            public Model addAttribute(String s, Object o) {
-                return null;
-            }
-
-            @Override
-            public Model addAttribute(Object o) {
-                return null;
-            }
-
-            @Override
-            public Model addAllAttributes(Collection<?> collection) {
-                return null;
-            }
-
-            @Override
-            public Model addAllAttributes(Map<String, ?> map) {
-                return null;
-            }
-
-            @Override
-            public Model mergeAttributes(Map<String, ?> map) {
-                return null;
-            }
-
-            @Override
-            public boolean containsAttribute(String s) {
-                return false;
-            }
-
-            @Override
-            public Object getAttribute(String s) {
-                return null;
-            }
-
-            @Override
-            public Map<String, Object> asMap() {
-                return null;
-            }
-        };
-        webController.questionnaireForm(questionnaire,model);
-        //this is a interface method access by the page
-    }
 
     @Test
     public void showResultTest() throws SQLException {
