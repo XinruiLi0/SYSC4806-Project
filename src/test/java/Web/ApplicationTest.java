@@ -18,6 +18,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,7 +38,47 @@ class ApplicationTest {
     String userName = "admin";
     String userPwd = "ivmsdbadmin";
 
-    Model model;
+    Model model= new Model() {
+        @Override
+        public Model addAttribute(String s, Object o) {
+            return null;
+        }
+
+        @Override
+        public Model addAttribute(Object o) {
+            return null;
+        }
+
+        @Override
+        public Model addAllAttributes(Collection<?> collection) {
+            return null;
+        }
+
+        @Override
+        public Model addAllAttributes(Map<String, ?> map) {
+            return null;
+        }
+
+        @Override
+        public Model mergeAttributes(Map<String, ?> map) {
+            return null;
+        }
+
+        @Override
+        public boolean containsAttribute(String s) {
+            return false;
+        }
+
+        @Override
+        public Object getAttribute(String s) {
+            return null;
+        }
+
+        @Override
+        public Map<String, Object> asMap() {
+            return null;
+        }
+    };
     @Mock
     QuestionnaireRepo QR;
 
@@ -51,7 +92,7 @@ class ApplicationTest {
     }
 
     @Test
-    public void repoEamilSearchTest() {
+    public void repoEmailSearchTest() {
         Questionnaire ques = new Questionnaire("Jake","jake@gmail.com",false,false,null,false);
         QR.save(ques);
         Questionnaire result = QR.findByEmail("jake@gmail.com");
@@ -105,6 +146,26 @@ class ApplicationTest {
         Statement statement = conn.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from Questionnaire where email='mmm'");
         return resultSet;
+    }
+
+    @Test
+    public void questionnaireFormTest() throws Exception {
+        model.addAttribute("Questionnaire", new Questionnaire());
+        WebController wc = new WebController();
+        Connection conn = DriverManager.getConnection(dbURL, userName, userPwd);
+        Statement statement = conn.createStatement();
+        Questionnaire q = new Questionnaire("aa","bb",false,false,null,false);
+        wc.questionnaireForm(q,model);
+        ResultSet resultSet = statement.executeQuery("select * from Questionnaire where email='bb'");
+        assertEquals(resultSet.next(),false);
+    }
+
+    @Test
+    public void emailValidationTest(){
+        WebController wc = new WebController();
+        String email = "sasa@cas.ca";
+
+        assertEquals(wc.emailValidate(email),true);
     }
 
 }
