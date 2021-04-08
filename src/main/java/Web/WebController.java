@@ -5,7 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Controller
@@ -26,7 +27,17 @@ public class WebController {
         model.addAttribute("Questionnaire", new Questionnaire());
         return "questionnaire";
     }
-    
+
+    public boolean emailValidate(String email){
+        String regex = "^(.+)@(.+)$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(email);
+        if(m.matches()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      *
      * @param ques
@@ -38,24 +49,29 @@ public class WebController {
     public void questionnaireForm(@ModelAttribute Questionnaire ques, Model model) throws Exception {
         model.addAttribute(ques);
         String email = ques.getEmail();
-        String query = "select * from Questionnaire where email = '"+ email+"'";
-        int inres = ques.isRemainInResidence() == true? 1 : 0;
-        int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
-        int inned = ques.isNeedSupport() == true? 1 : 0;
-        String updateQuery = "update Questionnaire set RemainInResidence = '"+inres+ "'," +"NeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
-        try {
-            if(executeSQL(query,false).next()){
-                executeSQL(updateQuery,true);
-            }else {
+        if(!emailValidate(email)){
+            System.out.println("Wrong Email Format");
+            return;
+        }else {
+            String query = "select * from Questionnaire where email = '" + email + "'";
+            int inres = ques.isRemainInResidence() == true ? 1 : 0;
+            int isexp = ques.isExperienceSymptoms() == true ? 1 : 0;
+            int inned = ques.isNeedSupport() == true ? 1 : 0;
+            String updateQuery = "update Questionnaire set RemainInResidence = '" + inres + "'," + "NeedSupport = '" + inned + "'," + "ExperienceSymptoms = '" + isexp + "'," + "SupportType ='" + ques.getSupportType() + "' where email = '" + email + "'";
+            try {
+                if (executeSQL(query, false).next()) {
+                    executeSQL(updateQuery, true);
+                } else {
 
-                String first = "INSERT INTO Questionnaire (RemainInResidence, NeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
-                String second = first + inres + "," + inned + "," + isexp + ", '" + ques.getSupportType() + "','" + ques.getName() + "','" + ques.getEmail() + "')";
-                executeSQL(second, true);
+                    String first = "INSERT INTO Questionnaire (RemainInResidence, NeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
+                    String second = first + inres + "," + inned + "," + isexp + ", '" + ques.getSupportType() + "','" + ques.getName() + "','" + ques.getEmail() + "')";
+                    executeSQL(second, true);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            emailUnit.sendEmail(email);
         }
-        emailUnit.sendEmail(email);
     }
 
     /**
