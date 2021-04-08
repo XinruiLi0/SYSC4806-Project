@@ -42,13 +42,13 @@ public class WebController {
         int inres = ques.isRemainInResidence() == true? 1 : 0;
         int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
         int inned = ques.isNeedSupport() == true? 1 : 0;
-        String updateQuery = "update Questionnaire set EemainInResidence = '"+inres+ "'," +"EeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
+        String updateQuery = "update Questionnaire set RemainInResidence = '"+inres+ "'," +"NeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
         try {
             if(executeSQL(query,false).next()){
                 executeSQL(updateQuery,true);
             }else {
 
-                String first = "INSERT INTO Questionnaire (EemainInResidence, EeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
+                String first = "INSERT INTO Questionnaire (RemainInResidence, NeedSupport, ExperienceSymptoms, SupportType, Name, Email) VALUES (";
                 String second = first + inres + "," + inned + "," + isexp + ", '" + ques.getSupportType() + "','" + ques.getName() + "','" + ques.getEmail() + "')";
                 executeSQL(second, true);
             }
@@ -123,12 +123,12 @@ public class WebController {
 
                 name += rs.getString("Name") + "\n";
                 email += rs.getString("Email") + "\n";
-                if (!rs.getBoolean("EemainInResidence")) {
+                if (!rs.getBoolean("RemainInResidence")) {
                     remainInResidence += "No\n";
                 } else {
                     remainInResidence += "Yes\n";
                 }
-                if (!rs.getBoolean("EeedSupport")) {
+                if (!rs.getBoolean("NeedSupport")) {
                     needSupport += "No\n";
                 } else {
                     needSupport += "Yes\n";
