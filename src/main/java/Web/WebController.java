@@ -42,7 +42,6 @@ public class WebController {
         int inres = ques.isRemainInResidence() == true? 1 : 0;
         int isexp = ques.isExperienceSymptoms() == true? 1 : 0;
         int inned = ques.isNeedSupport() == true? 1 : 0;
-        emailUnit.sendEmail(email);
         String updateQuery = "update Questionnaire set EemainInResidence = '"+inres+ "'," +"EeedSupport = '"+inned +"'," + "ExperienceSymptoms = '"+isexp+"',"+"SupportType ='"+ques.getSupportType()+"' where email = '"+email +"'";
         try {
             if(executeSQL(query,false).next()){
@@ -56,6 +55,7 @@ public class WebController {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        emailUnit.sendEmail(email);
     }
 
     /**

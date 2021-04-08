@@ -40,7 +40,7 @@ public class JavaEmailUnit {
             message.setFrom(new InternetAddress(account));
             message.setRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
             message.setSubject("Questionnaire Conformation");
-            String questionnaireInfo = getInfo();
+            String questionnaireInfo = getInfo(recipient);
             message.setText("Dear Participant:\n\n"+"Thank you for participanting our Covid Questionnaire! This is the confirmation email about your Covid Questionnaire. Here is a review of your questionnaire:\n\n"+questionnaireInfo+"\n regards,\n4806 Project Team");
             return message;
         } catch (Exception e) {
@@ -49,27 +49,27 @@ public class JavaEmailUnit {
         return  null;
     }
 
-    private static String getInfo() throws SQLException {
-        ResultSet rs =  SQLSetUp();
+    private static String getInfo(String emailname) throws SQLException {
+        ResultSet rs = SQLSetUp(emailname);
         WebController webController = new WebController();
         String testResult = webController.convertToString(rs);
         return  testResult;
     }
 
-    private static ResultSet SQLSetUp() throws SQLException {
+    private static ResultSet SQLSetUp(String emailname) throws SQLException {
         String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String dbURL = "jdbc:sqlserver://ivmsdb.cs17etkshc9t.us-east-1.rds.amazonaws.com;DatabaseName=sysc4806";
         String userName = "admin";
         String userPwd = "ivmsdbadmin";
         Connection conn = DriverManager.getConnection(dbURL, userName, userPwd);
         Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery("select top 1 * from Questionnaire order BY id DESC ");
+        ResultSet resultSet = statement.executeQuery("select * from Questionnaire where Email = " + "'" + emailname + "'");
         return resultSet;
     }
 
 
 
     public static void main(String[] args) throws Exception {
-        JavaEmailUnit.sendEmail("chenzewen0505@gmail.com");
+        JavaEmailUnit.sendEmail("986428227@qq.com");
     }
 }
