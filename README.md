@@ -92,7 +92,7 @@ Contributions for m3:
 
     	Xinrui Li -- Front-End and Back-End
 
-    	Junyuan Chen -- Back-End and Front End
+    	Junyuan Chen -- Back-End, Front End and Testing
 
     	Zewen Chen -- Testing, Front End, and Back-End
 
