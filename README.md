@@ -86,6 +86,18 @@ Contributions for m2:
 
 	Xiling Wang -- Front-End and Documentations
 
+Contributions for m3:
+
+	Xinyu Chen -- Front-End and Back-End
+
+    	Xinrui Li -- Front-End and Back-End
+
+    	Junyuan Chen -- Back-End and Front End
+
+    	Zewen Chen -- Testing, Front End, and Back-End
+
+	Xiling Wang -- Front-End, Back-End, and Documentations
+	
 Deadlines:
 
 	Milestone 1 Demo March 12th 
@@ -99,4 +111,5 @@ Further Improvements:
 	
 	m1:The general functions and features have been done in milestone 1. In milestone 2, The functions and content will be expanded (the questionnaire will becloser to the real use). Restriction settings will be added, for example: the user must fill in all the options  before submit the questionnaire, the name and email address cannot be repeated with the existing one, the user must fill in the email address and name before they can submit the questionnaire, etc.
 	m2: The database, front-end page, and two more features have been done in milestone 2. The more details need to be done in milestone 3. such as: error handling, more friendly user interface. 
+	m3: we implemented "send email" feature, onece the user finished the questionnaire. they will receive a confirmation email which contains the questionnaire's information. we also added few featues by using vue.js. such as vue component, class and style bindings, vue conditionals, list rendering and filters. we also added temporary questionnaire result. and there is a error handling to check if the email's style is valid or not. The background color would vary according to the user's selection, if the user is in danger, the color would become yellow or red to represent his/her current situation. 
 	
